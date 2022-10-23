@@ -9,20 +9,21 @@ using YazLab.Identity;
 using YazLab.Models;
 using Microsoft.Owin.Security;
 using System.Net.NetworkInformation;
+using System.Web.Helpers;
+using System.Security.Cryptography;
+using System.IO;
+using System.Text;
 
 namespace YazLab.Controllers
 {
     public class AdminController : Controller
     {
-        private UserManager<ApplicationUser> UserManager;
-        private RoleManager<ApplicationRole> RoleManager;
+        private UserManager<ApplicationUser> userManager;
+        private RoleManager<IdentityRole> roleManager;
         public AdminController()
         {
-            var userStore = new UserStore<ApplicationUser>(new IdentityContext());
-            UserManager = new UserManager<ApplicationUser>(userStore);
-
-            var roleStore = new RoleStore<ApplicationRole>(new IdentityContext());
-            RoleManager = new RoleManager<ApplicationRole>(roleStore);
+            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityContext()));
+            roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new IdentityContext()));
         }
         public string seflink(string x)
         {
@@ -68,10 +69,6 @@ namespace YazLab.Controllers
             return x;
         }
 
-        public ActionResult KullaniciEkleme()
-        {
-            return View();
-        }
         public static string CreateRandomPassword(int PasswordLength)
         {
             string _allowedChars = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ";
@@ -84,6 +81,20 @@ namespace YazLab.Controllers
             }
             return new string(chars);
         }
+
+        public ActionResult Index()
+        {
+
+            return View(userManager.Users);
+        }
+
+        [HttpGet]
+        public ActionResult KullaniciEkleme()
+        {
+            return View();
+
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -103,26 +114,22 @@ namespace YazLab.Controllers
                 user.Name = model.Name;
                 user.Surname = model.Surname;
                 user.Email = model.Email;
-                user.UserName= seflinkKullaniciAdi;
+                user.UserName = model.OkulNumara;
                 user.OkulNumara = model.OkulNumara;
                 user.Create_Time = DateTime.Now;
                 user.Update_Time = DateTime.Now;
                 user.PhoneNumber = model.PhoneNumber;
+                user.Seflink = seflinkKullaniciAdi;
                 var a = CreateRandomPassword(8);
                 user.OtoSifre = a;
-                IdentityResult result = UserManager.Create(user,a );
-
-
+                IdentityResult result = userManager.Create(user, a);
                 if (result.Succeeded)
                 {
 
                     //kullanıcı oluşunca role atıyoruz!!!
 
-                    if (RoleManager.RoleExists("ogrenci"))
-                    {
-                        UserManager.AddToRole(user.Id, "ogrenci");
-                    }
-                    return RedirectToAction("Index", "Admin");
+                    userManager.AddToRole(user.Id, "ogrenci");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -134,6 +141,7 @@ namespace YazLab.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public ActionResult Giris()
         {
             return View();
@@ -143,38 +151,160 @@ namespace YazLab.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Giris(Giris model)
         {
+
             if (ModelState.IsValid)
             {
+                TimeSpan gunFarki = model.bitis - model.baslangic;
+                double gun = gunFarki.TotalDays;
+
+
                 //Login İşlemleri
-                var user = UserManager.Find(model.Email, model.Password);
+                var user = userManager.Find(model.UserName, model.Password);
+                //var user = userManager.Find(model.Email,model.Password);
                 if (user != null)
                 {
+
+
+                    var authManager = HttpContext.GetOwinContext().Authentication;// kullanıcı girdi çıktılarını yönetmek için
+                    var identityclaims = userManager.CreateIdentity(user, "ApplicationCookie"); // kullanıcı için cookie oluşturmak için
+                    var authProperties = new AuthenticationProperties();
+                    authProperties.IsPersistent = model.RememberMe;//hatırlamak için
+                    authManager.SignOut();
+                    authManager.SignIn(authProperties, identityclaims);
+                    return RedirectToAction("index", "Admin");
+
                     //kullanıcı varsa sistem dahil et
                     //Aplication cookie oluşturup sisteme bırak
 
-                    var authManager = HttpContext.GetOwinContext().Authentication;
-                    var identityclaims = UserManager.CreateIdentity(user, "ApplicationCookie");
-                    var authProperties = new AuthenticationProperties();
-                    authProperties.IsPersistent = model.RememberMe;
-                    authManager.SignIn(authProperties, identityclaims);
-                    return RedirectToAction("KullaniciEkleme", "Admin");
+
                 }
                 else
                 {
-                    ModelState.AddModelError("LoginUserError", "Giris hatası");
+                    ModelState.AddModelError("", "Giris hatası");
                 }
 
             }
             return View(model);
         }
+
+
         public ActionResult Cikis()
         {
             var authManager = HttpContext.GetOwinContext().Authentication;
             authManager.SignOut();
-            
-            return RedirectToAction("Index","Admin");
+
+            return RedirectToAction("Index", "Admin");
         }
 
 
+
+
+
+
+        //Rol işlemleri
+        public ActionResult RoleIndex()
+        {
+            return View(roleManager.Roles);
+        }
+
+        [HttpGet]
+        public ActionResult RoleOlustur()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RoleOlustur(string rolAd)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = roleManager.Create(new IdentityRole(rolAd));
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("RoleIndex");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Rol oluşturulamadı...!!");
+                }
+            }
+            return View(rolAd);
+        }
+
+
+        [HttpPost]
+        public ActionResult RolKaldir(string id)
+        {
+            var role = roleManager.FindById(id);
+            if (role != null)
+            {
+                var result = roleManager.Delete(role);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("RoleIndex");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Rol silme işlemi başarısız");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Rol bulunamadı");
+
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult RolGuncelle(string id)
+        {
+            var rolBilgiler = roleManager.FindById(id);//role bilgilerini çektik
+            var roluOlanKullanicilar = new List<ApplicationUser>();//kayıtlı kullanıcılara ulaştık
+            var roluOlmayanKullanicilar = new List<ApplicationUser>();
+
+            foreach (var user in userManager.Users.ToList())
+            {
+                var list = userManager.IsInRole(user.Id, rolBilgiler.Name) ? roluOlanKullanicilar : roluOlmayanKullanicilar; //kullanıcının rolu varsa roluOlanKullanıcılara yoksa olmayana ekle
+                list.Add(user);
+            }
+
+            return View(new RoleModel.RoledekiKullanicilar()
+            {
+                rol = rolBilgiler,
+                roluOlanlar = roluOlanKullanicilar,
+                roluOlmayanlar = roluOlmayanKullanicilar
+            });
+        }
+
+        [HttpPost]
+        public ActionResult RolGuncelle(RoleModel.RoleGuncelleme model)
+        {
+            if (ModelState.IsValid)
+            {
+                //checkbox ile seçili kullanıcıları role ekleme işlemli
+                foreach (var userId in model.idsToAdd ?? new string[] { })
+                {
+                    IdentityResult result = userManager.AddToRole(userId, model.roleName);
+                    if (!result.Succeeded)//hata yoksa role ekle
+                    {
+                        return View("Error", result.Errors);
+                    }
+                }
+                foreach (var userId in model.idsToDelete ?? new string[] { })
+                {
+                    var result = userManager.RemoveFromRole(userId, model.roleName);
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError("", "Rol yetkilendirmesi başarısız...!");
+
+                    }
+                   
+                }
+                return RedirectToAction("RolGuncelle");
+            }
+            return View("Error", new string[] { "Böyle bir rol bulunmamakta" });
+
+        }
     }
 }

@@ -3654,12 +3654,12 @@
     </Compile>
     <Compile Include="Identity\ApplicationRole.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
+    <Compile Include="Identity\DataContext.cs" />
     <Compile Include="Identity\IdentityContext.cs" />
     <Compile Include="Identity\IdentityInitilaizer.cs" />
-    <Compile Include="Models\DataContext.cs" />
-    <Compile Include="Models\DataInitilaizer.cs" />
     <Compile Include="Models\Giris.cs" />
     <Compile Include="Models\KullaniciEkleme.cs" />
+    <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4022,6 +4022,9 @@
     <Content Include="Views\Admin\KullaniciEkleme.cshtml" />
     <Content Include="Views\Admin\Giris.cshtml" />
     <Content Include="Views\Shared\_Visitor.cshtml" />
+    <Content Include="Views\Admin\RoleIndex.cshtml" />
+    <Content Include="Views\Admin\RoleOlustur.cshtml" />
+    <Content Include="Views\Admin\RolGuncelle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

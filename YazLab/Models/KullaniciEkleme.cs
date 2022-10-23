@@ -12,9 +12,11 @@ namespace YazLab.Models
         [Required]
         [DisplayName("Adınız")]
         public string Name { get; set; }
+
         [Required]
         [DisplayName("Soyadınız")]
         public string Surname { get; set; }
+
         [Required]
         [DisplayName("Okul Numarası")]
         public string OkulNumara { get; set; }
@@ -25,11 +27,12 @@ namespace YazLab.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
-        public string Password { get; set; }
-
         public DateTime Create_Time { get; set; }
         
         public DateTime Update_Time { get; set; }
-        
+        public string seflink { get; set; }
+
+        public string OtoSifre { get; set; }
+
     }
 }

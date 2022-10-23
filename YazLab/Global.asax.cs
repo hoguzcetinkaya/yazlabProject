@@ -16,7 +16,7 @@ namespace YazLab
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            Database.SetInitializer(new DataInitilaizer());
+            //Database.SetInitializer(new DataInitilaizer());
             Database.SetInitializer(new IdentityInitilaizer());
 
         }

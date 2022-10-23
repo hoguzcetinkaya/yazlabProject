@@ -8,12 +8,12 @@ using System.Web;
 
 namespace YazLab.Identity
 {
-    public class IdentityInitilaizer:DropCreateDatabaseIfModelChanges<IdentityContext>
+    public class IdentityInitilaizer : CreateDatabaseIfNotExists<IdentityContext>
     {
         protected override void Seed(IdentityContext context)
         {
             //Roller
-            if (!context.Roles.Any(i=>i.Name=="admin"))
+            if (!context.Roles.Any(i => i.Name == "admin"))
             {
                 var store = new RoleStore<ApplicationRole>(context);
                 var manager = new RoleManager<ApplicationRole>(store);
@@ -34,33 +34,33 @@ namespace YazLab.Identity
             {
                 var store = new RoleStore<ApplicationRole>(context);
                 var manager = new RoleManager<ApplicationRole>(store);
-                var role = new ApplicationRole() { Name="ogretmen",Description="ogretmen rolu"};
+                var role = new ApplicationRole() { Name = "ogretmen", Description = "ogretmen rolu" };
                 manager.Create(role);
             }
 
-            if (!context.Users.Any(i => i.Name == "batuhanaral"))
-            {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser() { Name = "batuhan", Surname = "aral", UserName = "batuhanaral", Email = "batuhanaral3@gmail.com" };
-                manager.Create(user, "1234567");
-                manager.AddToRole(user.Id, "admin");
+            //if (!context.Users.Any(i => i.Name == "batuhanaral"))
+            //{
+            //    var store = new UserStore<ApplicationUser>(context);
+            //    var manager = new UserManager<ApplicationUser>(store);
+            //    var user = new ApplicationUser() { Name = "batuhan", Surname = "aral", UserName = "batuhanaral", Email = "batuhanaral3@gmail.com" };
+            //    manager.Create(user, "1234567");
+            //    manager.AddToRole(user.Id, "admin");
 
-            }
+            //}
 
-            if (!context.Users.Any(i => i.Name == "oguzcetinkaya"))
-            {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser() { Name = "oguz", Surname = "cetinkaya", UserName = "oguzcetinkaya", Email = "huseyinoguzc@gmail.com" };
-                manager.Create(user, "1234567");
-                manager.AddToRole(user.Id, "ogrenci");
+            //if (!context.Users.Any(i => i.Name == "oguzcetinkaya"))
+            //{
+            //    var store = new UserStore<ApplicationUser>(context);
+            //    var manager = new UserManager<ApplicationUser>(store);
+            //    var user = new ApplicationUser() { Name = "oguz", Surname = "cetinkaya", UserName = "oguzcetinkaya", Email = "huseyinoguzc@gmail.com" };
+            //    manager.Create(user, "1234567");
+            //    manager.AddToRole(user.Id, "ogrenci");
 
-            }
+            //}
 
 
 
-            base.Seed(context); 
+            base.Seed(context);
         }
     }
 }

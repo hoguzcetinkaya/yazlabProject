@@ -12,24 +12,38 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
         <div class="card-body">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(x => x.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    @Html.EditorFor(x => x.UserName, new { htmlAttributes = new { @class = "form-control col-md-6" } })
+                    @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(x => x.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.baslangic, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(x => x.baslangic, new { @type = "date", @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.baslangic, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bitis, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(x => x.bitis, new { @type = "date", @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.bitis, "", new { @class = "text-danger" })
                 </div>
             </div>
 

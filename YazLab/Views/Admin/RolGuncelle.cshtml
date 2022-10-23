@@ -1,0 +1,170 @@
+﻿@model YazLab.Models.RoleModel.RoledekiKullanicilar
+@{
+    ViewBag.Title = "RolGuncelle";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="roleName" value="@Model.rol.Name" />
+    <input type="hidden" name="roleId" value="@Model.rol.Id" />
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <h1>ADmiiiin!!</h1>
+                    <!-- ./col -->
+                </div>
+                <!-- /.row -->
+                <!-- Main row -->
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <!-- /.card -->
+                        <!--/.direct-chat -->
+                        <!-- TO DO List -->
+                        <!-- /.card -->
+                        <div class="alert alert-danger">@Model.rol.Name - Rolünde yetkisi olmayan kullanıcılar </div>
+                        <table class="table" style="width:65rem; margin:auto">
+
+                            @*//rolu olmayanları listele*@
+                            @if (Model.roluOlmayanlar.Count() == 0)
+                            {
+                                <tr>
+                                    <td colspan="4">@Model.rol.Name Rolünde kullanıcı bulunmamakta</td>
+                                </tr>
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <th>
+                                        Ad
+                                    </th>
+                                    <th>
+                                        Soyad
+                                    </th>
+                                    <th>
+                                        Okul Numarası
+                                    </th>
+                                    <th>
+                                        Rol Adı
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                                foreach (var user in Model.roluOlmayanlar)
+                                {
+                                    <tr>
+                                        <td>
+                                            @user.Name
+                                        </td>
+
+                                        <td>
+                                            @user.Surname
+                                        </td>
+                                        <td>
+                                            @user.OkulNumara
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="idsToAdd" value="@user.Id" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+
+
+                        </table>
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable">
+                    </section>
+                    <!-- right col -->
+                </div>
+
+                <hr /><hr />
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <!-- /.card -->
+                        <!--/.direct-chat -->
+                        <!-- TO DO List -->
+                        <!-- /.card -->
+                        <div class="alert alert-primary">@Model.rol.Name - Rolünde yetkisi olan kullanıcılar  </div>
+                        <table class="table" style="width:65rem; margin:auto">
+
+                            @*rolu olanları listeler*@
+                            @if (Model.roluOlanlar.Count() == 0)
+                            {
+                                <tr>
+                                    <td colspan="4">@Model.rol.Name Rolü verilebilecek kullanıcı bulunmamaktadır</td>
+                                </tr>
+                            }
+                            else
+                            {
+
+                                <tr>
+                                    <th>
+                                        Ad
+                                    </th>
+                                    <th>
+                                        Soyad
+                                    </th>
+                                    <th>
+                                        Okul Numarası
+                                    </th>
+                                    <th>
+                                        Rol Adı
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                                foreach (var user in Model.roluOlanlar)
+                                {
+                                    <tr>
+                                        <td>
+                                            @user.Name
+                                        </td>
+
+                                        <td>
+                                            @user.Surname
+                                        </td>
+                                        <td>
+                                            @user.OkulNumara
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="idsToDelete" value="@user.Id" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+
+
+
+                        </table>
+                        <button class="btn btn-primary" type="submit">Kaydet</button>
+                    </section>
+
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable">
+                    </section>
+                    <!-- right col -->
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+}
+<!-- Content Wrapper. Contains page content -->

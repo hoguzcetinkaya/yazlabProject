@@ -9,20 +9,21 @@ namespace YazLab.Models
 {
     public class Giris
     {
-        [Required]
-        [DisplayName("Eposta")]
-        [EmailAddress(ErrorMessage = "Eposta adresiniz hatalıdır.")]
-        public string Email { get; set; }
+        [Required(ErrorMessage ="Kullanıcı adınızı boş bırakmayınız...")]
+        [DisplayName("Kullanıcı adınız")]
+        public string UserName { get; set; }
 
         
         [Required]
-        [DisplayName("Parola")]
+        [DisplayName("Parolanız")]
         public string Password { get; set; }
 
 
         [DisplayName("Beni Hatırla")]
         public bool RememberMe { get; set; }
 
+        public DateTime baslangic { get; set; }
+        public DateTime bitis { get; set; }
 
     }
 }

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "RoleIndex";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <h1>ADmiiiin!!</h1>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+            <!-- Main row -->
+            <div class="row">
+                <!-- Left col -->
+                <section class="col-lg-7 connectedSortable">
+                    <!-- Custom tabs (Charts with tabs)-->
+                    <!-- /.card -->
+                    <!--/.direct-chat -->
+                    <!-- TO DO List -->
+                    <!-- /.card -->
+
+                    <table class="table" style="width:65rem; margin:auto">
+                        @if (Model.Count() != 0)
+                        {
+                            <tr>
+                                <th>
+                                    Rol id
+                                </th>
+                                <th>
+                                    Rol Adı
+                                </th>
+                                <th>
+                                    İşlemler
+                                </th>
+
+
+                                <th></th>
+                            </tr>
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Id
+                                    </td>
+
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+
+                                        @using (Html.BeginForm("RolKaldir", "Admin", new { id = item.Id }))
+                                        {
+                                            <button class="btn btn-primary">Kaldır</button>
+
+
+                                            @Html.ActionLink("Güncelle", "RolGuncelle", new { id = item.Id }, new { @class = "btn btn-danger" })
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>Rol yok</td>
+                            </tr>
+                        }
+
+                        
+
+
+                    </table>
+                    
+                </section>
+                <!-- /.Left col -->
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                <section class="col-lg-5 connectedSortable">
+                </section>
+                <!-- right col -->
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+

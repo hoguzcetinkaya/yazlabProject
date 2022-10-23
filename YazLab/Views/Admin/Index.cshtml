@@ -1,86 +1,88 @@
-﻿@model IEnumerable<YazLab.Models.KullaniciEkleme>
-    @{
-        ViewBag.Title = "Index";
-        Layout = "~/Views/Shared/_Admin.cshtml";
-    }
+﻿@model IEnumerable<YazLab.Identity.ApplicationUser>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <!-- /.content-header -->
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <h1>ADmiiiin!!</h1>
-                    <!-- ./col -->
-                </div>
-                <!-- /.row -->
-                <!-- Main row -->
-                <div class="row">
-                    <!-- Left col -->
-                    <section class="col-lg-7 connectedSortable">
-                        <!-- Custom tabs (Charts with tabs)-->
-                        <!-- /.card -->
-                        <!--/.direct-chat -->
-                        <!-- TO DO List -->
-                        <!-- /.card -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <h1>ADmiiiin!!</h1>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+            <!-- Main row -->
+            <div class="row">
+                <!-- Left col -->
+                <section class="col-lg-7 connectedSortable">
+                    <!-- Custom tabs (Charts with tabs)-->
+                    <!-- /.card -->
+                    <!--/.direct-chat -->
+                    <!-- TO DO List -->
+                    <!-- /.card -->
 
-                        <table class="table" style="width:65rem; margin:auto">
+                    <table class="table" style="width:65rem; margin:auto">
+                        <tr>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Surname)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OkulNumara)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OtoSifre)
+                            </th>
+
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Name)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Surname)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Email)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.OkulNumara)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.OtoSifre)
-                                </th>
 
-                                <th></th>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Surname
+                                </td>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @item.OkulNumara
+                                </td>
+                                <td>
+                                    @item.OtoSifre
+                                </td>
                             </tr>
+                        }
 
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    
-                                    <td>
-                                        @Html.DisplayNameFor(model => model.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayNameFor(model => model.Surname)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayNameFor(model => model.Email)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayNameFor(model => model.OkulNumara)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayNameFor(model => model.OtoSifre)
-                                    </td>
-                                </tr>
-                            }
+                        </table>
+                </section>
+                <!-- /.Left col -->
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                <section class="col-lg-5 connectedSortable">
 
-</section>
-                    <!-- /.Left col -->
-                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                    <section class="col-lg-5 connectedSortable">
-                    </section>
-                    <!-- right col -->
-                </div>
-                <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
+                </section>
+                <!-- right col -->
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
 

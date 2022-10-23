@@ -15,6 +15,7 @@ namespace YazLab.Identity
         public DateTime Create_Time { get; set; }
         public DateTime Update_Time { get; set; }
         public string OtoSifre { get; set; }
+        public string Seflink { get; set; }
 
 
     }
