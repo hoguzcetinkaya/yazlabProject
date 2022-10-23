@@ -12,6 +12,11 @@ namespace YazLab.Controllers
 {
     public class OgrenciController : Controller
     {
+        public ActionResult StajBasvuru()
+        {
+            return View();
+        }
+
         //    private DataContext db = new DataContext();
 
         //    // GET: Ogrenci

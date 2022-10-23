@@ -1,0 +1,87 @@
+﻿@model YazLab.Models.KullaniciEkleme
+@{
+    ViewBag.Title = "OgretmenListele";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>ÖĞRETMENLER</h2>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <h1>ÖĞRETMENLER</h1>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+            <!-- Main row -->
+            <div class="row">
+                <!-- Left col -->
+                <section class="col-lg-7 connectedSortable">
+                    <!-- Custom tabs (Charts with tabs)-->
+                    <!-- /.card -->
+                    <!--/.direct-chat -->
+                    <!-- TO DO List -->
+                    <!-- /.card -->
+
+                    <table class="table" style="width:65rem; margin:auto">
+                        <tr>
+                            <th>
+                                AD
+                            </th>
+                            <th>
+                                SOYAD
+                            </th>
+                            <th>
+                                E-MAIL
+                            </th>
+                            <th>
+                                OKUL NUMARASI
+                            </th>
+                            <th>
+                                ŞİFRE
+                            </th>
+
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.OgretmenOlanlar)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Surname
+                                </td>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @item.OkulNumara
+                                </td>
+                                <td>
+                                    @item.OtoSifre
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </section>
+                <!-- /.Left col -->
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                <section class="col-lg-5 connectedSortable">
+                </section>
+                <!-- right col -->
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

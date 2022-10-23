@@ -306,5 +306,48 @@ namespace YazLab.Controllers
             return View("Error", new string[] { "Böyle bir rol bulunmamakta" });
 
         }
+
+
+
+        //Öğrencilerin Listelenmesi
+        public ActionResult OgrenciListele()
+        {
+            var OgrenciOlanlar = new List<ApplicationUser>();//kayıtlı kullanıcılara ulaştık
+            var OgrenciOlmayanlar = new List<ApplicationUser>();
+
+
+            foreach (var user in userManager.Users.ToList())
+            {
+                var list = userManager.IsInRole(user.Id, "ogrenci") ? OgrenciOlanlar : OgrenciOlmayanlar;
+                list.Add(user);
+            }
+
+            return View(new KullaniciEkleme()
+            {
+                OgrenciOlanlar = OgrenciOlanlar
+            });
+        }
+
+
+        //Öğretmenlerin Listelenmesi
+        public ActionResult OgretmenListele()
+        {
+            var OgretmenOlanlar = new List<ApplicationUser>();//kayıtlı kullanıcılara ulaştık
+            var OgretmenOlmayanlar = new List<ApplicationUser>();
+
+
+            foreach (var user in userManager.Users.ToList())
+            {
+                var list = userManager.IsInRole(user.Id, "ogretmen") ? OgretmenOlanlar : OgretmenOlmayanlar;
+                list.Add(user);
+            }
+
+            return View(new KullaniciEkleme()
+            {
+                OgretmenOlanlar = OgretmenOlanlar
+            });
+        }
+
+
     }
 }

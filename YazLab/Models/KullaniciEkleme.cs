@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Linq;
 using System.Web;
+using YazLab.Identity;
 
 namespace YazLab.Models
 {
@@ -33,6 +34,9 @@ namespace YazLab.Models
         public string seflink { get; set; }
 
         public string OtoSifre { get; set; }
+
+        public IEnumerable<ApplicationUser> OgrenciOlanlar { get; set; }//Öğrenciler
+        public IEnumerable<ApplicationUser> OgretmenOlanlar { get; set; }//Ogretmenler
 
     }
 }
