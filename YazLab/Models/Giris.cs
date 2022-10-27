@@ -22,8 +22,6 @@ namespace YazLab.Models
         [DisplayName("Beni Hatırla")]
         public bool RememberMe { get; set; }
 
-        public DateTime baslangic { get; set; }
-        public DateTime bitis { get; set; }
-
+        
     }
 }

@@ -12,10 +12,31 @@
     <section class="content">
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
+
             <div class="row">
-                <h1>ADmiiiin!!</h1>
+                    <h1>ADmiiiin!!</h1>
+                    <!-- ./col -->
+                </div>
+            
+            <div class="row">
+                @if (ViewBag.v == null)
+                {
+
+                }
+                else
+                {
+                    <h1>@ViewBag.v</h1>
+                }
+
                 <!-- ./col -->
             </div>
+            
+
+
+
+
+
+
             <!-- /.row -->
             <!-- Main row -->
             <div class="row">
@@ -71,12 +92,11 @@
                             </tr>
                         }
 
-                        </table>
+                    </table>
                 </section>
                 <!-- /.Left col -->
                 <!-- right col (We are only adding the ID to make the widgets sortable)-->
                 <section class="col-lg-5 connectedSortable">
-
                 </section>
                 <!-- right col -->
             </div>

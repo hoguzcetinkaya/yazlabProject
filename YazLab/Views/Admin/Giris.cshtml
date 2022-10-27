@@ -32,20 +32,7 @@
                     @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(x => x.baslangic, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(x => x.baslangic, new { @type = "date", @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.baslangic, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(x => x.bitis, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(x => x.bitis, new { @type = "date", @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.bitis, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            
 
 
         </div>

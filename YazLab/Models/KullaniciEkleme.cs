@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Linq;
 using System.Web;
+using YazLab.Identity;
 
 namespace YazLab.Models
 {
@@ -34,5 +35,6 @@ namespace YazLab.Models
 
         public string OtoSifre { get; set; }
 
+        public IEnumerable<ApplicationUser> OgrenciOlanlar { get; set; }
     }
 }

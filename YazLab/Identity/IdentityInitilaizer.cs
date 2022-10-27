@@ -8,7 +8,7 @@ using System.Web;
 
 namespace YazLab.Identity
 {
-    public class IdentityInitilaizer : CreateDatabaseIfNotExists<IdentityContext>
+    public class IdentityInitilaizer : DropCreateDatabaseIfModelChanges<IdentityContext>
     {
         protected override void Seed(IdentityContext context)
         {

@@ -150,3 +150,6 @@ D:\VisualStudioExamples\yazilimGelistirmeLab\YazLab\obj\Debug\YazLab.csproj.Core
 D:\VisualStudioExamples\yazilimGelistirmeLab\YazLab\obj\Debug\YazLab.csproj.CopyComplete
 D:\VisualStudioExamples\yazilimGelistirmeLab\YazLab\obj\Debug\YazLab.dll
 D:\VisualStudioExamples\yazilimGelistirmeLab\YazLab\obj\Debug\YazLab.pdb
+D:\VisualStudioExamples\yazilimGelistirmeLab\YazLab\bin\BouncyCastle.Crypto.dll
+D:\VisualStudioExamples\yazilimGelistirmeLab\YazLab\bin\itextsharp.dll
+D:\VisualStudioExamples\yazilimGelistirmeLab\YazLab\bin\itextsharp.xml

@@ -43,11 +43,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -3657,9 +3663,11 @@
     <Compile Include="Identity\DataContext.cs" />
     <Compile Include="Identity\IdentityContext.cs" />
     <Compile Include="Identity\IdentityInitilaizer.cs" />
+    <Compile Include="Models\BasvuruModel.cs" />
     <Compile Include="Models\Giris.cs" />
     <Compile Include="Models\KullaniciEkleme.cs" />
     <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Pdf\PdfAyarlari.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4013,18 +4021,18 @@
     <Content Include="Views\Shared\_Ogretmen.cshtml" />
     <Content Include="Views\Shared\_Komisyon.cshtml" />
     <Content Include="Views\Komisyon\Index.cshtml" />
-    <Content Include="Views\Ogrenci\Index.cshtml" />
     <Content Include="Views\Ogretmen\Index.cshtml" />
-    <Content Include="Views\Ogrenci\Create.cshtml" />
-    <Content Include="Views\Ogrenci\Delete.cshtml" />
-    <Content Include="Views\Ogrenci\Details.cshtml" />
-    <Content Include="Views\Ogrenci\Edit.cshtml" />
     <Content Include="Views\Admin\KullaniciEkleme.cshtml" />
     <Content Include="Views\Admin\Giris.cshtml" />
     <Content Include="Views\Shared\_Visitor.cshtml" />
     <Content Include="Views\Admin\RoleIndex.cshtml" />
     <Content Include="Views\Admin\RoleOlustur.cshtml" />
     <Content Include="Views\Admin\RolGuncelle.cshtml" />
+    <Content Include="Views\Admin\OgrenciListesi.cshtml" />
+    <Content Include="Views\Home\Giris.cshtml" />
+    <Content Include="Views\Ogrenci\Staj1.cshtml" />
+    <Content Include="Views\Ogrenci\Index.cshtml" />
+    <Content Include="Views\Ogrenci\PdfIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

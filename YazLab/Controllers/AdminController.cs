@@ -85,6 +85,18 @@ namespace YazLab.Controllers
         public ActionResult Index()
         {
 
+
+
+
+
+
+            //var user = userManager.FindByName(User.Identity.Name);
+            //if (user != null)
+            //{
+            //    ViewBag.v = user.Email;
+            //}
+
+
             return View(userManager.Users);
         }
 
@@ -154,8 +166,7 @@ namespace YazLab.Controllers
 
             if (ModelState.IsValid)
             {
-                TimeSpan gunFarki = model.bitis - model.baslangic;
-                double gun = gunFarki.TotalDays;
+                
 
 
                 //Login İşlemleri
@@ -171,6 +182,8 @@ namespace YazLab.Controllers
                     authProperties.IsPersistent = model.RememberMe;//hatırlamak için
                     authManager.SignOut();
                     authManager.SignIn(authProperties, identityclaims);
+
+                    
                     return RedirectToAction("index", "Admin");
 
                     //kullanıcı varsa sistem dahil et
@@ -193,7 +206,7 @@ namespace YazLab.Controllers
             var authManager = HttpContext.GetOwinContext().Authentication;
             authManager.SignOut();
 
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Giris", "Home");
         }
 
 
@@ -256,6 +269,7 @@ namespace YazLab.Controllers
             return View();
         }
 
+
         [HttpGet]
         public ActionResult RolGuncelle(string id)
         {
@@ -299,12 +313,42 @@ namespace YazLab.Controllers
                         ModelState.AddModelError("", "Rol yetkilendirmesi başarısız...!");
 
                     }
-                   
+
                 }
                 return RedirectToAction("RolGuncelle");
             }
             return View("Error", new string[] { "Böyle bir rol bulunmamakta" });
 
         }
+
+
+        public ActionResult OgrenciListesi()
+        {
+            var rolId = roleManager.FindByName("ogrenci");
+
+            var OgrenciOlanlarC = new List<ApplicationUser>();//kayıtlı kullanıcılara ulaştık
+            var OgrenciOlmayanlar = new List<ApplicationUser>();
+
+
+
+            foreach (var user in userManager.Users.ToList())
+            {
+                var list = userManager.IsInRole(user.Id, "ogrenci") ? OgrenciOlanlarC : OgrenciOlmayanlar;
+                list.Add(user);
+
+                
+            }
+
+            return View(new KullaniciEkleme() 
+            {
+                 OgrenciOlanlar= OgrenciOlanlarC,
+            });
+        }
+
+
+
+
+
     }
+
 }

@@ -62,6 +62,10 @@
 
 
                                             @Html.ActionLink("Güncelle", "RolGuncelle", new { id = item.Id }, new { @class = "btn btn-danger" })
+                                            if (item.Name == "ogrenci")
+                                            {
+                                                @Html.ActionLink("Öğrenci Listesi", "OgrenciListesi", new { id = item.Id }, new { @class = "btn btn-success" })
+                                            }
                                         }
                                     </td>
 
@@ -75,11 +79,11 @@
                             </tr>
                         }
 
-                        
+
 
 
                     </table>
-                    
+
                 </section>
                 <!-- /.Left col -->
                 <!-- right col (We are only adding the ID to make the widgets sortable)-->
