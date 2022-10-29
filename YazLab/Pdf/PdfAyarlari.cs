@@ -34,20 +34,11 @@ namespace YazLab.Pdf
         //pdf nasıl gözükecek ?
         public byte[] ReportPdf(List<BasvuruModel> model)
         {
-            iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance("C:/Users/omera/OneDrive/Masaüstü/proje/images/kocaeli-universitesi-logo.png");
+            iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance("C:/Users/omera/OneDrive/Masaüstü/YazlabProjee/images/kocaeli-universitesi-logo.png");
 
-            //Resize image depend upon your need
+
 
             jpg.ScaleToFit(45f, 45f);
-
-
-            //Give space before image
-
-            //jpg.SpacingBefore = 300f;
-
-            //Give some space after the image
-
-            //jpg.SpacingAfter = 500f;
 
             jpg.Alignment = Element.TITLE;
 
@@ -126,66 +117,8 @@ namespace YazLab.Pdf
         //kullanıcılar
         public void ReportPdfBody()
         {
-            //fontStyle = FontFactory.GetFont("Times New Roman", 8f, 1);
-            //pdfPCell = new PdfPCell(new Phrase("name", fontStyle));
-            //pdfPCell.Colspan = toplamSutun;
-            //pdfPCell.BackgroundColor = BaseColor.GRAY;
-            //pdfTable.AddCell(pdfPCell);
-
-
-            //fontStyle = FontFactory.GetFont("Times New Roman", 8f, 1);
-            //pdfPCell = new PdfPCell(new Phrase("lastname", fontStyle));
-            //pdfPCell.Colspan = toplamSutun;
-
-            //pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //pdfPCell.BackgroundColor = BaseColor.GRAY;
-            //pdfTable.AddCell(pdfPCell);
-
-
-            //fontStyle = FontFactory.GetFont("Times New Roman", 8f, 1);
-            //pdfPCell = new PdfPCell(new Phrase("number ", fontStyle));
-            //pdfPCell.Colspan = toplamSutun;
-
-            //pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //pdfPCell.BackgroundColor = BaseColor.GRAY;
-            //pdfTable.AddCell(pdfPCell);
-            //pdfTable.CompleteRow();
-
-
-            //fontStyle = FontFactory.GetFont("Times New Roman", 8f, 1);
-            //foreach (var k in userManager.Users)
-            //{
-
-            //    fontStyle = FontFactory.GetFont("Times New Roman", 11f, 1);
-            //    pdfPCell = new PdfPCell(new Phrase("Ad", fontStyle));
-            //    pdfPCell.Colspan = toplamSutun;
-
-            //    pdfPCell.Border = 1;
-            //    pdfPCell.BackgroundColor = BaseColor.WHITE;
-            //    pdfPCell.ExtraParagraphSpace = 0;
-
-            //    pdfPCell = new PdfPCell(new Phrase(k.Name, fontStyle));
-            //    pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            //    pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //    pdfPCell.BackgroundColor = BaseColor.WHITE;
-            //    pdfTable.AddCell(pdfPCell);
-
-
-            //    pdfPCell = new PdfPCell(new Phrase(k.Surname, fontStyle));
-            //    pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            //    pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //    pdfPCell.BackgroundColor = BaseColor.WHITE;
-            //    pdfTable.AddCell(pdfPCell);
-
-            //    pdfPCell = new PdfPCell(new Phrase(k.OkulNumara, fontStyle));
-            //    pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            //    pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //    pdfPCell.BackgroundColor = BaseColor.WHITE;
-            //    pdfTable.AddCell(pdfPCell);
-            //    pdfTable.CompleteRow();
-
-            //}
-
+            
+   
 
             fontStyle = FontFactory.GetFont("Times New Roman", 9f, 0);
 
