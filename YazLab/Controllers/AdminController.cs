@@ -134,6 +134,11 @@ namespace YazLab.Controllers
                 user.Seflink = seflinkKullaniciAdi;
                 var a = CreateRandomPassword(8);
                 user.OtoSifre = a;
+                string subject = "Staj sistemi giriş bilgileriniz";
+                string body = "Şifreniz: " + a +
+                    " /               kullanıcı adınız:" + model.OkulNumara;
+                WebMail.Send(model.Email, subject, body, null, null, null, true, null, null, null, null, null, null);
+                ViewBag.Mesaj = "Şifre gönderimi başarılı";
                 IdentityResult result = userManager.Create(user, a);
                 if (result.Succeeded)
                 {
@@ -153,52 +158,7 @@ namespace YazLab.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult Giris()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Giris(Giris model)
-        {
-
-            if (ModelState.IsValid)
-            {
-                
-
-
-                //Login İşlemleri
-                var user = userManager.Find(model.UserName, model.Password);
-                //var user = userManager.Find(model.Email,model.Password);
-                if (user != null)
-                {
-
-
-                    var authManager = HttpContext.GetOwinContext().Authentication;// kullanıcı girdi çıktılarını yönetmek için
-                    var identityclaims = userManager.CreateIdentity(user, "ApplicationCookie"); // kullanıcı için cookie oluşturmak için
-                    var authProperties = new AuthenticationProperties();
-                    authProperties.IsPersistent = model.RememberMe;//hatırlamak için
-                    authManager.SignOut();
-                    authManager.SignIn(authProperties, identityclaims);
-
-                    
-                    return RedirectToAction("index", "Admin");
-
-                    //kullanıcı varsa sistem dahil et
-                    //Aplication cookie oluşturup sisteme bırak
-
-
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Giris hatası");
-                }
-
-            }
-            return View(model);
-        }
+        
 
 
         public ActionResult Cikis()

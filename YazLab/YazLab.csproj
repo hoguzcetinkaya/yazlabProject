@@ -4023,7 +4023,6 @@
     <Content Include="Views\Komisyon\Index.cshtml" />
     <Content Include="Views\Ogretmen\Index.cshtml" />
     <Content Include="Views\Admin\KullaniciEkleme.cshtml" />
-    <Content Include="Views\Admin\Giris.cshtml" />
     <Content Include="Views\Shared\_Visitor.cshtml" />
     <Content Include="Views\Admin\RoleIndex.cshtml" />
     <Content Include="Views\Admin\RoleOlustur.cshtml" />
@@ -4033,6 +4032,7 @@
     <Content Include="Views\Ogrenci\Staj1.cshtml" />
     <Content Include="Views\Ogrenci\Index.cshtml" />
     <Content Include="Views\Ogrenci\PdfIndex.cshtml" />
+    <Content Include="Views\Account\Giris.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -4042,7 +4042,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
