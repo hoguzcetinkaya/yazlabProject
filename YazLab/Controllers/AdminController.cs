@@ -13,6 +13,7 @@ using System.Web.Helpers;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace YazLab.Controllers
 {
@@ -134,6 +135,11 @@ namespace YazLab.Controllers
                 user.Seflink = seflinkKullaniciAdi;
                 var a = CreateRandomPassword(8);
                 user.OtoSifre = a;
+                string subject = "Staj sistemi giriş bilgileriniz";
+                string body = "Şifreniz: " + a +
+                    " /               kullanıcı adınız:" + model.OkulNumara;
+                WebMail.Send(model.Email, subject, body, null, null, null, true, null, null, null, null, null, null);
+                ViewBag.Mesaj = "Şifre gönderimi başarılı";
                 IdentityResult result = userManager.Create(user, a);
                 if (result.Succeeded)
                 {
@@ -153,61 +159,61 @@ namespace YazLab.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult Giris()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult Giris()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Giris(Giris model)
-        {
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Giris(Giris model)
+        //{
 
-            if (ModelState.IsValid)
-            {
-                
-
-
-                //Login İşlemleri
-                var user = userManager.Find(model.UserName, model.Password);
-                //var user = userManager.Find(model.Email,model.Password);
-                if (user != null)
-                {
+        //    if (ModelState.IsValid)
+        //    {
 
 
-                    var authManager = HttpContext.GetOwinContext().Authentication;// kullanıcı girdi çıktılarını yönetmek için
-                    var identityclaims = userManager.CreateIdentity(user, "ApplicationCookie"); // kullanıcı için cookie oluşturmak için
-                    var authProperties = new AuthenticationProperties();
-                    authProperties.IsPersistent = model.RememberMe;//hatırlamak için
-                    authManager.SignOut();
-                    authManager.SignIn(authProperties, identityclaims);
 
-                    
-                    return RedirectToAction("index", "Admin");
-
-                    //kullanıcı varsa sistem dahil et
-                    //Aplication cookie oluşturup sisteme bırak
+        //        //Login İşlemleri
+        //        var user = userManager.Find(model.UserName, model.Password);
+        //        //var user = userManager.Find(model.Email,model.Password);
+        //        if (user != null)
+        //        {
 
 
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Giris hatası");
-                }
-
-            }
-            return View(model);
-        }
+        //            var authManager = HttpContext.GetOwinContext().Authentication;// kullanıcı girdi çıktılarını yönetmek için
+        //            var identityclaims = userManager.CreateIdentity(user, "ApplicationCookie"); // kullanıcı için cookie oluşturmak için
+        //            var authProperties = new AuthenticationProperties();
+        //            authProperties.IsPersistent = model.RememberMe;//hatırlamak için
+        //            authManager.SignOut();
+        //            authManager.SignIn(authProperties, identityclaims);
 
 
-        public ActionResult Cikis()
-        {
-            var authManager = HttpContext.GetOwinContext().Authentication;
-            authManager.SignOut();
+        //            return RedirectToAction("index", "Admin");
 
-            return RedirectToAction("Giris", "Home");
-        }
+        //            //kullanıcı varsa sistem dahil et
+        //            //Aplication cookie oluşturup sisteme bırak
+
+
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("", "Giris hatası");
+        //        }
+
+        //    }
+        //    return View(model);
+        //}
+
+
+        //public ActionResult Cikis()
+        //{
+        //    var authManager = HttpContext.GetOwinContext().Authentication;
+        //    authManager.SignOut();
+
+        //    return RedirectToAction("Giris", "Home");
+        //}
 
 
 
@@ -322,6 +328,8 @@ namespace YazLab.Controllers
         }
 
 
+
+
         public ActionResult OgrenciListesi()
         {
             var rolId = roleManager.FindByName("ogrenci");
@@ -336,18 +344,147 @@ namespace YazLab.Controllers
                 var list = userManager.IsInRole(user.Id, "ogrenci") ? OgrenciOlanlarC : OgrenciOlmayanlar;
                 list.Add(user);
 
-                
+
             }
 
-            return View(new KullaniciEkleme() 
+            return View(new KullaniciEkleme()
             {
-                 OgrenciOlanlar= OgrenciOlanlarC,
+                OgrenciOlanlar = OgrenciOlanlarC,
+            });
+        }
+        public ActionResult OgretmenListesi()
+        {
+            var rolId = roleManager.FindByName("ogretmen");
+
+            var OgretmenOlanlarC = new List<ApplicationUser>();//kayıtlı kullanıcılara ulaştık
+            var OgretmenOlmayanlarC = new List<ApplicationUser>();
+
+
+
+            foreach (var user in userManager.Users.ToList())
+            {
+                var list = userManager.IsInRole(user.Id, "ogretmen") ? OgretmenOlanlarC : OgretmenOlmayanlarC;
+                list.Add(user);
+
+
+            }
+
+            return View(new KullaniciEkleme()
+            {
+                OgretmenOlanlar = OgretmenOlanlarC,
             });
         }
 
+        [HttpGet]
+        public ActionResult OgrenciAtamaOgretmen(string id)
+        {
+            var sorumlusuAtananC = new List<ApplicationUser>();//kayıtlı kullanıcılara ulaştık
+            var sorumlusuAtanmayanC = new List<ApplicationUser>();
+            var OlanC = new List<ApplicationUser>();
+            var OlmayanC = new List<ApplicationUser>();
+            ViewBag.OgretmenId = id;
 
+            foreach (var user in userManager.Users.ToList())
+            {
+                if (userManager.IsInRole(user.Id, "ogrenci"))
+                {
+                    if(user.Sorumlu==id)
+                    {
+                        var list = userManager.IsInRole(user.Id, "ogrenci") ? sorumlusuAtananC : sorumlusuAtanmayanC;
+                        list.Add(user);
+                    }
+                    else if(user.Sorumlu==null)
+                    {
+                        var list = userManager.IsInRole(user.Id, "ogrenci") ? sorumlusuAtanmayanC : sorumlusuAtananC;
+                        list.Add(user);
+                    }
+                    
+                }
+                if (userManager.IsInRole(user.Id, "ogretmen"))
+                {
+                    var list = userManager.IsInRole(user.Id, "ogretmen") ? OlanC : OlmayanC;
+                    list.Add(user);
+                }       
 
+            }
 
+            return View(new KullaniciEkleme()
+            {
+                sorumlusuAtanan=sorumlusuAtananC,
+                sorumlusuAtanmayan=sorumlusuAtanmayanC,
+                 Olan=OlanC,
+                  Olmayan=OlmayanC
+            });
+        }
+
+        [HttpPost]
+        public ActionResult OgrenciAtamaOgretmen(KullaniciEkleme.OgrenciAtamaOgretmen model,string ogretmenid)
+        {
+            if (ModelState.IsValid)
+            {
+                //checkbox ile seçili kullanıcıları role ekleme işlemli
+                foreach (var userId in model.sorumluAtanan ?? new string[] { })
+                {
+                    ApplicationUser user = userManager.FindById(userId);
+
+                    var sorumlu = userManager.FindById(ogretmenid);
+                    user.Sorumlu = sorumlu.Id;
+                    userManager.Update(user);
+                }
+                foreach (var userId in model.sorumludanCikan ?? new string[] { })
+                {
+                    var user = userManager.FindById(userId);
+                    user.Sorumlu = null;
+                    userManager.Update(user);
+
+                }
+                return RedirectToAction("OgrenciAtamaOgretmen");
+            }
+            return View("Error", new string[] { "Böyle bir rol bulunmamakta" });
+            
+        }
+
+        [HttpGet]
+        public ActionResult OgretmenAtamaKomisyon(string id)
+        {
+            var sorumlusuAtananC = new List<ApplicationUser>();//kayıtlı kullanıcılara ulaştık
+            var sorumlusuAtanmayanC = new List<ApplicationUser>();
+            var OlanC = new List<ApplicationUser>();
+            var OlmayanC = new List<ApplicationUser>();
+            ViewBag.OgretmenId = id;
+
+            foreach (var user in userManager.Users.ToList())
+            {
+                if (userManager.IsInRole(user.Id, "ogrenci"))
+                {
+                    if (user.Sorumlu == id)
+                    {
+                        var list = userManager.IsInRole(user.Id, "ogrenci") ? sorumlusuAtananC : sorumlusuAtanmayanC;
+                        list.Add(user);
+                    }
+                    else if (user.Sorumlu == null)
+                    {
+                        var list = userManager.IsInRole(user.Id, "ogrenci") ? sorumlusuAtanmayanC : sorumlusuAtananC;
+                        list.Add(user);
+                    }
+
+                }
+                if (userManager.IsInRole(user.Id, "ogretmen"))
+                {
+                    var list = userManager.IsInRole(user.Id, "ogretmen") ? OlanC : OlmayanC;
+                    list.Add(user);
+                }
+
+            }
+
+            return View(new KullaniciEkleme()
+            {
+                sorumlusuAtanan = sorumlusuAtananC,
+                sorumlusuAtanmayan = sorumlusuAtanmayanC,
+                Olan = OlanC,
+                Olmayan = OlmayanC
+            });
+        }
 
     }
 

@@ -22,7 +22,7 @@ namespace YazLab.Identity
         public string Seflink { get; set; }
 
        
-        public ICollection<BasvuruModel.Staj1> Stajs { get; set; }
+        public ICollection<BasvuruModel.Staj> Stajs { get; set; }
 
 
     }

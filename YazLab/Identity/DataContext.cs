@@ -14,6 +14,6 @@ namespace YazLab.Identity
 
         }
 
-        public DbSet<BasvuruModel.Staj1> Stajs { get; set; }
+        public DbSet<BasvuruModel.Staj> Stajs { get; set; }
     }
 }

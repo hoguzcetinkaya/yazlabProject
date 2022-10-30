@@ -28,11 +28,11 @@ namespace YazLab.Pdf
         PdfPTable pdfTable = new PdfPTable(2);
         PdfPCell pdfPCell;
         MemoryStream memoryStream = new MemoryStream();
-        List<BasvuruModel.Staj1> stajBilgi = new List<BasvuruModel.Staj1>();
+        List<BasvuruModel.Staj> stajBilgi = new List<BasvuruModel.Staj>();
 
 
         //pdf nasıl gözükecek ?
-        public byte[] ReportPdf(List<BasvuruModel.Staj1> model)
+        public byte[] ReportPdf(List<BasvuruModel.Staj> model)
         {
             iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance("D:\\VisualStudioExamples\\yazilimGelistirmeLab\\images\\kou-logo.jpg");
 
@@ -101,7 +101,7 @@ namespace YazLab.Pdf
             pdfTable.CompleteRow();
 
             fontStyle = FontFactory.GetFont("Times New Roman", 9f, 0);
-            pdfPCell = new PdfPCell(new Phrase(" Teknoloji Fakültesi _ _ _ _ _ _ _ _ _ _ _ Mühendisliği Bölümü _ _ _ _ _ _ _ _ _ numaralı öğrencisiyim. Kurumunuzda staj yapmamın uygun görülmesi halinde bu formun alttaki kısmını doldurularak fakültemiz ilgili bölüm başkanlığına gönderilmesini saygılarımla arz ederim. İşyeri uygulaması süresi içerisinde alınan rapor, istirahat vb.belgelerin aslını alınan gün içerisinde bölüm başkanlığına bildireceğimi beyan ve taahhüt ederim.", fontStyle));
+            pdfPCell = new PdfPCell(new Phrase(" Teknoloji Fakultesi _ _ _ _ _ _ _ _ _ _ _ Mühendisligi Bolumu _ _ _ _ _ _ _ _ _ numaralı ogrencisiyim. Kurumunuzda staj yapmamın uygun görülmesi halinde bu formun alttaki kısmını doldurularak fakültemiz ilgili bölüm başkanlığına gönderilmesini saygılarımla arz ederim. İşyeri uygulaması süresi içerisinde alınan rapor, istirahat vb.belgelerin aslını alınan gün içerisinde bölüm başkanlığına bildireceğimi beyan ve taahhüt ederim.", fontStyle));
             pdfPCell.Colspan = 2;
             pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             pdfPCell.Border = 0;
@@ -111,7 +111,7 @@ namespace YazLab.Pdf
             pdfTable.CompleteRow();
 
             fontStyle = FontFactory.GetFont("Times New Roman", 9f, 0);
-            pdfPCell = new PdfPCell(new Phrase(" İşyeri uygulaması süresi içerisinde alınan rapor, istirahat vb.belgelerin aslını alınan gün içerisinde bölüm başkanlığına bildireceğimi beyan ve taahhüt ederim.", fontStyle));
+            pdfPCell = new PdfPCell(new Phrase(" Isyeri uygulaması süresi içerisinde alınan rapor, istirahat vb.belgelerin aslını alınan gün içerisinde bölüm başkanlığına bildireceğimi beyan ve taahhüt ederim.", fontStyle));
             pdfPCell.Colspan = 2;
             pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             pdfPCell.Border = 0;
@@ -126,67 +126,7 @@ namespace YazLab.Pdf
         //kullanıcılar
         public void ReportPdfBody()
         {
-            //fontStyle = FontFactory.GetFont("Times New Roman", 8f, 1);
-            //pdfPCell = new PdfPCell(new Phrase("name", fontStyle));
-            //pdfPCell.Colspan = toplamSutun;
-            //pdfPCell.BackgroundColor = BaseColor.GRAY;
-            //pdfTable.AddCell(pdfPCell);
-
-
-            //fontStyle = FontFactory.GetFont("Times New Roman", 8f, 1);
-            //pdfPCell = new PdfPCell(new Phrase("lastname", fontStyle));
-            //pdfPCell.Colspan = toplamSutun;
-
-            //pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //pdfPCell.BackgroundColor = BaseColor.GRAY;
-            //pdfTable.AddCell(pdfPCell);
-
-
-            //fontStyle = FontFactory.GetFont("Times New Roman", 8f, 1);
-            //pdfPCell = new PdfPCell(new Phrase("number ", fontStyle));
-            //pdfPCell.Colspan = toplamSutun;
-
-            //pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //pdfPCell.BackgroundColor = BaseColor.GRAY;
-            //pdfTable.AddCell(pdfPCell);
-            //pdfTable.CompleteRow();
-
-
-            //fontStyle = FontFactory.GetFont("Times New Roman", 8f, 1);
-            //foreach (var k in userManager.Users)
-            //{
-
-            //    fontStyle = FontFactory.GetFont("Times New Roman", 11f, 1);
-            //    pdfPCell = new PdfPCell(new Phrase("Ad", fontStyle));
-            //    pdfPCell.Colspan = toplamSutun;
-
-            //    pdfPCell.Border = 1;
-            //    pdfPCell.BackgroundColor = BaseColor.WHITE;
-            //    pdfPCell.ExtraParagraphSpace = 0;
-
-            //    pdfPCell = new PdfPCell(new Phrase(k.Name, fontStyle));
-            //    pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            //    pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //    pdfPCell.BackgroundColor = BaseColor.WHITE;
-            //    pdfTable.AddCell(pdfPCell);
-
-
-            //    pdfPCell = new PdfPCell(new Phrase(k.Surname, fontStyle));
-            //    pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            //    pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //    pdfPCell.BackgroundColor = BaseColor.WHITE;
-            //    pdfTable.AddCell(pdfPCell);
-
-            //    pdfPCell = new PdfPCell(new Phrase(k.OkulNumara, fontStyle));
-            //    pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            //    pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //    pdfPCell.BackgroundColor = BaseColor.WHITE;
-            //    pdfTable.AddCell(pdfPCell);
-            //    pdfTable.CompleteRow();
-
-            //}
-
-
+            
             fontStyle = FontFactory.GetFont("Times New Roman", 9f, 0);
 
             foreach (var employee in stajBilgi)

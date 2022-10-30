@@ -11,7 +11,7 @@ namespace YazLab.Models
 {
     public class BasvuruModel
     {
-        public class Staj1
+        public class Staj
         {
             [Key]
             public int Id { get; set; }
@@ -31,7 +31,7 @@ namespace YazLab.Models
             public string Adres { get; set; }
 
             [DisplayName("Staj Türünüz")]
-            public bool StajTuru { get; set; }
+            public string StajTuru { get; set; }
 
             [DisplayName("Staj Başlangıç Tarihiniz")]
             public DateTime StajBaslangicTarihi{ get; set; }
@@ -61,7 +61,10 @@ namespace YazLab.Models
             public string FirmaTelefon { get; set; }
 
             public bool Staj1Durum { get; set; }
+            public bool Staj1OnayDurum { get; set; }
 
+            public bool Staj2Durum { get; set; }
+            public bool Staj2OnayDurum { get; set; }
 
 
 

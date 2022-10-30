@@ -4030,9 +4030,16 @@
     <Content Include="Views\Admin\RolGuncelle.cshtml" />
     <Content Include="Views\Admin\OgrenciListesi.cshtml" />
     <Content Include="Views\Home\Giris.cshtml" />
-    <Content Include="Views\Ogrenci\Staj1.cshtml" />
     <Content Include="Views\Ogrenci\Index.cshtml" />
     <Content Include="Views\Ogrenci\PdfIndex.cshtml" />
+    <Content Include="Views\Ogrenci\StajBasvuru.cshtml" />
+    <Content Include="Views\Admin\OgretmenListesi.cshtml" />
+    <Content Include="Views\Admin\OgrenciAtamaOgretmen.cshtml" />
+    <Content Include="Views\Komisyon\Staj1OnayBekleyenler.cshtml" />
+    <Content Include="Views\Account\GirisSec.cshtml" />
+    <Content Include="Views\Account\OgrenciGiris.cshtml" />
+    <Content Include="Views\Account\OgretmenGiris.cshtml" />
+    <Content Include="Views\Account\YoneticiGiris.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -4042,7 +4049,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

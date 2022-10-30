@@ -35,6 +35,27 @@ namespace YazLab.Models
 
         public string OtoSifre { get; set; }
 
+
+
         public IEnumerable<ApplicationUser> OgrenciOlanlar { get; set; }
+        public IEnumerable<ApplicationUser> OgretmenOlanlar { get; set; }
+        
+
+        public IEnumerable<ApplicationUser> sorumlusuAtanan { get; set; }
+        public IEnumerable<ApplicationUser> sorumlusuAtanmayan { get; set; }
+        public IEnumerable<ApplicationUser> Olan { get; set; }
+        public IEnumerable<ApplicationUser> Olmayan { get; set; }
+
+
+        public class OgrenciAtamaOgretmen
+        {
+            public string[] sorumluAtanan { get; set; }
+            public string[] sorumludanCikan { get; set; }
+        }
+
+
+
     }
+
+    
 }

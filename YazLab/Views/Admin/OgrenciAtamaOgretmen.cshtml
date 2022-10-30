@@ -1,0 +1,157 @@
+﻿@model YazLab.Models.KullaniciEkleme
+@{
+    ViewBag.Title = "OgrenciAtamaOgretmen";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+@using (Html.BeginForm(
+    "OgrenciAtamaOgretmen", "Admin",
+        new { ogretmenid = @ViewBag.OgretmenId },
+        FormMethod.Post,
+        new { enctype = "multipart/form-data" }))
+{
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <h1>ADmiiiin!!</h1>
+                    <!-- ./col -->
+                </div>
+                <!-- /.row -->
+                <!-- Main row -->
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <!-- /.card -->
+                        <!--/.direct-chat -->
+                        <!-- TO DO List -->
+                        <!-- /.card -->
+                        <div class="alert alert-success"> Öğretmene atanan Öğrencilerin Listesi </div>
+
+                        <table class="table" style="width:65rem; margin:auto">
+                            @if (Model.sorumlusuAtanan.Count() != 0)
+                            {
+
+                                <tr>
+
+                                    <th>
+                                        Ad
+                                    </th>
+                                    <th>
+                                        Soyad
+                                    </th>
+                                    <th>
+                                        Okul Numarası
+                                    </th>
+                                    <th></th>
+
+                                </tr>
+
+                                foreach (var item in Model.sorumlusuAtanan)
+                                {
+
+                                    <tr>
+
+                                        <td>
+                                            @item.Name
+                                        </td>
+                                        <td>
+                                            @item.Surname
+                                        </td>
+                                        <td>
+                                            @item.OkulNumara
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="sorumludanCikan" value="@item.Id" />
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                @Html.Label("Öğretmene atanan öğrenci yok")
+                            }
+
+
+                        </table>
+
+                    </section>
+
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <!-- right col -->
+                </div>
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <!-- /.card -->
+                        <!--/.direct-chat -->
+                        <!-- TO DO List -->
+                        <!-- /.card -->
+                        <div class="alert alert-danger"> Öğretmene atanmayan öğrencilerin listesi </div>
+                        <table class="table" style="width:65rem; margin:auto">
+                            @if (Model.sorumlusuAtanmayan.Count() != 0)
+                            {
+
+                                <tr>
+
+                                    <th>
+                                        Ad
+                                    </th>
+                                    <th>
+                                        Soyad
+                                    </th>
+                                    <th>
+                                        Okul Numarası
+                                    </th>
+                                    <th></th>
+
+                                </tr>
+
+                                foreach (var item in Model.sorumlusuAtanmayan)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @item.Name
+                                        </td>
+                                        <td>
+                                            @item.Surname
+                                        </td>
+                                        <td>
+                                            @item.OkulNumara
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="sorumluAtanan" value="@item.Id" />
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                @Html.Label("Sistemde Sorumlusu olmayan öğrenci yok")
+                            }
+
+
+                        </table>
+                        <button type="submit" class="btn btn-success" value="@Model.OkulNumara">Kaydet</button>
+                    </section>
+
+                </div>
+
+
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+}
