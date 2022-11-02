@@ -345,7 +345,10 @@ namespace YazLab.Controllers
             });
         }
 
-
+        public ActionResult BilgilendirmeSayfasi()
+        {
+            return View();
+        }
 
 
 

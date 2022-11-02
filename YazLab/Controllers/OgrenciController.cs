@@ -123,5 +123,11 @@ namespace YazLab.Controllers
 
             return stajListe;
         }
+
+        public ActionResult RaporGonder()
+        {
+            return View();
+        }
+
     }
 }

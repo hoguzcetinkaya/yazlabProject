@@ -1,7 +1,7 @@
 ﻿@model YazLab.Models.Giris
 @{
     ViewBag.Title = "Giris";
-   
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/Content/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
-    <div class="login-box"> 
+    <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
@@ -34,7 +34,7 @@
                     <p class="login-box-msg">Sisteme kullanıcı adınız (numaranız) ile giriş yapınız.</p>
 
                     <form>
-                        <div class="input-group mb-3" >
+                        <div class="input-group mb-3">
                             @Html.LabelFor(x => x.UserName, htmlAttributes: new { @class = "control-label col-md-12" })
                             @*<input type="email" class="form-control" placeholder="Email">*@
                             <div class="input-group-append" style="margin:auto;">
@@ -61,16 +61,24 @@
                                 <button type="submit" class="btn btn-primary btn-block">
                                     Giriş Yap
                                     <i class="fa-solid fa-arrow-right-to-bracket" style="margin-left: 10px;"></i>
-
                                 </button>
                             </div>
+
+
                             <!-- /.col -->
                         </div>
                     </form>
                 </div>
 
             }
-
+            <div class="col-12 mb-2">
+                <hr />
+                    <a class="btn btn-warning btn-block" href="BilgilendirmeSayfasi">
+                        Bilgilendirme Sayfasına Git
+                        <i class="fa-regular fa-circle-question" style="margin-left: 10px;"></i>
+                    </a>
+                </a>
+            </div>
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
