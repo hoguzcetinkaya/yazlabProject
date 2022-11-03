@@ -86,6 +86,7 @@ namespace YazLab.Controllers
                 {
                     if (userManager.IsInRole(user.Id, "ogretmen"))
                     {
+
                         var authManager = HttpContext.GetOwinContext().Authentication;// kullanıcı girdi çıktılarını yönetmek için
                         var identityclaims = userManager.CreateIdentity(user, "ApplicationCookie"); // kullanıcı için cookie oluşturmak için
                         var authProperties = new AuthenticationProperties();
@@ -93,8 +94,8 @@ namespace YazLab.Controllers
                         authManager.SignOut();
                         authManager.SignIn(authProperties, identityclaims);
 
-
-                        return RedirectToAction("index", "Ogretmen");
+                        ViewBag.userBilgi = user;
+                        return RedirectToAction("index", "Komisyon");
                     }
                     else
                     {

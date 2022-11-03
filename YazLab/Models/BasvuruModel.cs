@@ -66,6 +66,8 @@ namespace YazLab.Models
             public bool Staj2Durum { get; set; }
             public bool Staj2OnayDurum { get; set; }
 
+            public int Staj1Not { get; set; }
+            public int Staj2Not { get; set; }
 
 
             

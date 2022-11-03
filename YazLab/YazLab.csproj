@@ -3655,6 +3655,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KomisyonController.cs" />
     <Compile Include="Controllers\OgrenciController.cs" />
+    <Compile Include="Controllers\OgretmenController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -4023,7 +4024,6 @@
     <Content Include="Views\Komisyon\Index.cshtml" />
     <Content Include="Views\Ogretmen\Index.cshtml" />
     <Content Include="Views\Admin\KullaniciEkleme.cshtml" />
-    <Content Include="Views\Admin\Giris.cshtml" />
     <Content Include="Views\Shared\_Visitor.cshtml" />
     <Content Include="Views\Admin\RoleIndex.cshtml" />
     <Content Include="Views\Admin\RoleOlustur.cshtml" />
@@ -4040,6 +4040,9 @@
     <Content Include="Views\Account\OgrenciGiris.cshtml" />
     <Content Include="Views\Account\OgretmenGiris.cshtml" />
     <Content Include="Views\Account\YoneticiGiris.cshtml" />
+    <Content Include="Views\Komisyon\Staj2OnayBekleyenler.cshtml" />
+    <Content Include="Views\Ogrenci\StajBasvurularim.cshtml" />
+    <Content Include="Views\Ogretmen\Staj1Notlandirma.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

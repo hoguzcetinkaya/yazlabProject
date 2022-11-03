@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using YazLab.Identity;
 using YazLab.Models;
 using YazLab.Pdf;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace YazLab.Controllers
 {
@@ -23,7 +24,7 @@ namespace YazLab.Controllers
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityContext()));
             roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new IdentityContext()));
         }
-        
+
 
         public ActionResult Index()
         {
@@ -38,30 +39,82 @@ namespace YazLab.Controllers
         [HttpPost]
         public ActionResult StajBasvuru(BasvuruModel.Staj model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 TimeSpan gunFarki = model.StajBitisTarihi - model.StajBaslangicTarihi;
                 double gun = gunFarki.TotalDays;
-                if( model.IsGunu==30)
+                if (model.IsGunu == 30)
                 {
                     DataContext db = new DataContext();
                     ApplicationUser kullanici = userManager.FindByName(User.Identity.Name);
-                    
+
                     var basvuru = new BasvuruModel.Staj();
                     basvuru.Ad = model.Ad;
                     basvuru.Soyad = model.Soyad;
                     basvuru.TC = model.TC;
                     basvuru.TelefonNumarasi = model.TelefonNumarasi;
                     basvuru.Adres = model.Adres;
-                    if(model.StajTuru=="1")
+                    if (model.StajTuru == "1")
                     {
-                        basvuru.StajTuru = "Staj1";
-                        basvuru.Staj1Durum = true;
+                        var kullaniciStajBilgi = db.Stajs.Where(x => x.User_Id == kullanici.Id).ToList();
+                        if (kullaniciStajBilgi.Count() != 0)
+                        {
+                            foreach (var item in kullaniciStajBilgi)
+                            {
+                                if (item.Staj1Durum == true)
+                                {
+                                    ModelState.AddModelError("", "Aktif staj 1 başvurunuz bulunmaktadır ");
+                                    return View(model);
+                                }
+                                else
+                                {
+                                    basvuru.StajTuru = "Staj1";
+                                    basvuru.Staj1Durum = true;
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            basvuru.StajTuru = "Staj1";
+                            basvuru.Staj1Durum = true;
+                        }
+
+
                     }
-                    else
+                    if (model.StajTuru == "2")
                     {
-                        basvuru.StajTuru = "Staj2";
-                        basvuru.Staj2Durum = true;
+                        var kullaniciStajBilgi = db.Stajs.Where(x => x.User_Id == kullanici.Id && x.StajTuru == "Staj2").ToList();
+                        if (kullaniciStajBilgi.Count() != 0)
+                        {
+                            foreach (var item in kullaniciStajBilgi)
+                            {
+                                if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true)
+                                {
+                                    ModelState.AddModelError("", "Aktif staj 2 başvurunuz bulunmaktadır.");
+                                    return View(model);
+                                }
+                                else if (item.Staj1Durum == true && item.Staj1OnayDurum == true)
+                                {
+                                    basvuru.StajTuru = "Staj2";
+                                    basvuru.Staj2Durum = true;
+                                    basvuru.Staj1Durum = true;
+                                    basvuru.Staj1OnayDurum = true;
+                                }
+                                else if (item.Staj1Durum == false)
+                                {
+                                    ModelState.AddModelError("", "Staj 1 tamamlanmadan Staj 2 başvurusu yapamazsınız");
+                                    return View(model);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            basvuru.StajTuru = "Staj2";
+                            basvuru.Staj2Durum = true;
+                            basvuru.Staj1Durum = true;
+                            basvuru.Staj1OnayDurum = true;
+                        }
                     }
                     basvuru.StajBaslangicTarihi = model.StajBaslangicTarihi;
                     basvuru.StajBitisTarihi = model.StajBitisTarihi;
@@ -72,7 +125,7 @@ namespace YazLab.Controllers
                     basvuru.FirmaFaaliyetAlani = model.FirmaFaaliyetAlani;
                     basvuru.FirmaAdres = model.FirmaAdres;
                     basvuru.FirmaTelefon = model.FirmaTelefon;
-                    basvuru.User_Id= kullanici.Id; //staj1 modelinde oluşturduğum user_ıd foreign key
+                    basvuru.User_Id = kullanici.Id; //staj1 modelinde oluşturduğum user_ıd foreign key
                     db.Stajs.Add(basvuru);
                     db.SaveChanges();
                     TempData["Success"] = "Başvuru Başarılı";
@@ -82,27 +135,79 @@ namespace YazLab.Controllers
                 {
                     ModelState.AddModelError("", "Başvuru tamamlanamadı");
                 }
-                
-                
+
+
             }
             return View(model);
         }
 
-        public ActionResult PdfIndex(BasvuruModel.Staj model)
+        //public ActionResult PdfIndex(BasvuruModel.Staj model)
+        //{
+        //    PdfAyarlari pdfAyarlari = new PdfAyarlari();//employeeReport
+        //    byte[] abytes = pdfAyarlari.ReportPdf(GetKullanicilar());
+        //    return File(abytes, "application/Pdf");
+        //}
+        //public List<BasvuruModel.Staj> GetKullanicilar()
+        //{
+        //    DataContext db = new DataContext();
+        //    List<BasvuruModel.Staj> stajListe = new List<BasvuruModel.Staj>();
+        //    BasvuruModel.Staj stajBilgi = new BasvuruModel.Staj();
+
+        //    var kullaniciBilgi = userManager.FindByName(User.Identity.Name);
+        //    var kullanici = db.Stajs.FirstOrDefault(x=>x.User_Id==kullaniciBilgi.Id);
+
+        //    for (int i = 0; i < 1; i++)
+        //    {
+        //        stajBilgi.Ad = kullanici.Ad;
+        //        stajBilgi.Soyad = kullanici.Soyad;
+        //        stajBilgi.TC = kullanici.TC;
+        //        stajBilgi.TelefonNumarasi = kullanici.TelefonNumarasi;
+        //        stajBilgi.Adres = kullanici.Adres;
+        //        if(kullanici.StajTuru=="Staj1")
+        //        {
+        //            stajBilgi.StajTuru = "Staj 1";
+        //        }
+        //        else
+        //        {
+        //            stajBilgi.StajTuru = "Staj 2";
+        //        }
+
+        //        stajBilgi.StajBaslangicTarihi = kullanici.StajBaslangicTarihi;
+        //        stajBilgi.StajBitisTarihi = kullanici.StajBitisTarihi;
+        //        stajBilgi.IsGunu = kullanici.IsGunu;
+        //        stajBilgi.GenelSaglikSigortasi = kullanici.GenelSaglikSigortasi;
+        //        stajBilgi.YasDoldurma = kullanici.YasDoldurma;
+        //        stajBilgi.FirmaAd = kullanici.FirmaAd;
+        //        stajBilgi.FirmaFaaliyetAlani = kullanici.FirmaFaaliyetAlani;
+        //        stajBilgi.FirmaAdres = kullanici.FirmaAdres;
+        //        stajBilgi.FirmaTelefon = kullanici.FirmaTelefon;
+        //        stajListe.Add(stajBilgi);
+        //    }
+
+
+        //    return stajListe;
+        //}
+
+        [HttpGet]
+        public ActionResult StajBasvurularim()
         {
-            PdfAyarlari pdfAyarlari = new PdfAyarlari();//employeeReport
-            byte[] abytes = pdfAyarlari.ReportPdf(GetKullanicilar());
-            return File(abytes, "application/Pdf");
+            DataContext db = new DataContext();
+            var kullaniciBilgi = userManager.FindByName(User.Identity.Name);
+
+
+            return View(db.Stajs.Where(x => x.User_Id == kullaniciBilgi.Id).ToList());
         }
-        public List<BasvuruModel.Staj> GetKullanicilar()
+
+
+        public List<BasvuruModel.Staj> GetKullanicilar(int id)
         {
             DataContext db = new DataContext();
             List<BasvuruModel.Staj> stajListe = new List<BasvuruModel.Staj>();
             BasvuruModel.Staj stajBilgi = new BasvuruModel.Staj();
 
             var kullaniciBilgi = userManager.FindByName(User.Identity.Name);
-            var kullanici = db.Stajs.FirstOrDefault(x=>x.User_Id==kullaniciBilgi.Id);
-            
+            var kullanici = db.Stajs.Single(x => x.Id == id);
+
             for (int i = 0; i < 1; i++)
             {
                 stajBilgi.Ad = kullanici.Ad;
@@ -110,7 +215,7 @@ namespace YazLab.Controllers
                 stajBilgi.TC = kullanici.TC;
                 stajBilgi.TelefonNumarasi = kullanici.TelefonNumarasi;
                 stajBilgi.Adres = kullanici.Adres;
-                if(kullanici.StajTuru=="Staj1")
+                if (kullanici.StajTuru == "Staj1")
                 {
                     stajBilgi.StajTuru = "Staj 1";
                 }
@@ -118,7 +223,6 @@ namespace YazLab.Controllers
                 {
                     stajBilgi.StajTuru = "Staj 2";
                 }
-                
                 stajBilgi.StajBaslangicTarihi = kullanici.StajBaslangicTarihi;
                 stajBilgi.StajBitisTarihi = kullanici.StajBitisTarihi;
                 stajBilgi.IsGunu = kullanici.IsGunu;
@@ -130,9 +234,24 @@ namespace YazLab.Controllers
                 stajBilgi.FirmaTelefon = kullanici.FirmaTelefon;
                 stajListe.Add(stajBilgi);
             }
-            
 
             return stajListe;
         }
+        [HttpGet]
+        public ActionResult StajBasvurumPDF(int id)
+        {
+            PdfAyarlari pdfAyarlari = new PdfAyarlari();//employeeReport
+            byte[] abytes = pdfAyarlari.ReportPdf(GetKullanicilar(id));
+            return File(abytes, "application/Pdf");
+        }
+
+
+
+
+        //[HttpPost]  PDF İÇİN BÖYLE YAP
+        //public ActionResult StajBasvurularim(string id)
+        //{
+        //    return View();
+        //}
     }
 }

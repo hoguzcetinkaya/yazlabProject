@@ -42,5 +42,30 @@ namespace YazLab.Controllers
             
         }
 
+        [HttpGet]
+        public ActionResult Staj2OnayBekleyenler()
+        {
+            DataContext db = new DataContext();
+            return View(db.Stajs.ToList().Where(x => x.Staj2OnayDurum == false && x.Staj2Durum == true));
+        }
+
+        [HttpPost]
+        public ActionResult Staj2OnayBekleyenler(int id)
+        {
+            DataContext db = new DataContext();
+            var basvuruStaj2 = new BasvuruModel.Staj();
+            var staj2BasvuruOnaylanacakOgrenci = db.Stajs.Single(x => x.Id == id);
+
+            if (staj2BasvuruOnaylanacakOgrenci != null && staj2BasvuruOnaylanacakOgrenci.Staj2Durum == true && staj2BasvuruOnaylanacakOgrenci.Staj2OnayDurum == false)
+            {
+                staj2BasvuruOnaylanacakOgrenci.Staj2OnayDurum = true;
+                db.SaveChanges();
+
+
+            }
+
+            return RedirectToAction("Staj2OnayBekleyenler");
+
+        }
     }
 }

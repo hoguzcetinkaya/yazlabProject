@@ -230,7 +230,7 @@ namespace YazLab.Pdf
                 pdfPCell.BackgroundColor = BaseColor.WHITE;
                 pdfTable.AddCell(pdfPCell);
                 fontStyle = FontFactory.GetFont("Times New Roman", 9f, 0);
-                pdfPCell = new PdfPCell(new Phrase("Staj 1", fontStyle));
+                pdfPCell = new PdfPCell(new Phrase(employee.StajTuru, fontStyle));
                 pdfPCell.Rowspan = toplamSutun;
                 pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
