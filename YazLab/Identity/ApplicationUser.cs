@@ -23,7 +23,7 @@ namespace YazLab.Identity
 
        
         public ICollection<BasvuruModel> Stajs { get; set; }
-
+        public ICollection<BasvuruModelime> Imes { get; set; }
 
     }
 }

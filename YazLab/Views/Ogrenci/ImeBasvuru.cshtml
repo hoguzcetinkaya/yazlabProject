@@ -1,14 +1,13 @@
-﻿@model YazLab.Models.BasvuruModel
+﻿@model YazLab.Models.BasvuruModelime
 @{
-    ViewBag.Title = "StajBasvuru";
+    ViewBag.Title = "ImeBasvuru";
     Layout = "~/Views/Shared/_Ogrenci.cshtml";
 }
-
 <div class="content-wrapper" style="margin-top:20px;">
     <div class="col-md-9">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Staj Başvuru Formu</h3>
+                <h3 class="card-title">İşletmede Mesleki Eğitim Başvuru ve Kabul Formu</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -59,29 +58,29 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Staj1, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Guz, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.Staj1, htmlAttributes: new { @onclick = "" }) Staj1
+                            @Html.CheckBoxFor(model => model.Guz, htmlAttributes: new { @checked = true, @onclick = "" }) Güz
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Staj2, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Bahar, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.Staj2, htmlAttributes: new { @onclick = "" }) Staj2
+                            @Html.CheckBoxFor(model => model.Bahar, htmlAttributes: new { @checked = true, @onclick = "" }) Bahar
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.StajBaslangicTarihi, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.ImeBaslangicTarihi, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.PasswordFor(model => model.StajBaslangicTarihi, new { @type = "date", @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.StajBaslangicTarihi, "", new { @class = "text-danger" })
+                            @Html.PasswordFor(model => model.ImeBaslangicTarihi, new { @type = "date", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ImeBaslangicTarihi, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.StajBitisTarihi, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.ImeBitisTarihi, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.PasswordFor(model => model.StajBitisTarihi, new { @type = "date", @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.StajBitisTarihi, "", new { @class = "text-danger" })
+                            @Html.PasswordFor(model => model.ImeBitisTarihi, new { @type = "date", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ImeBitisTarihi, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -141,7 +140,7 @@
                     <button type="submit" class="btn btn-primary">Formu Gönder</button>
                 </div>
             }
-            <a href="PdfIndex" target="_blank" class="btn btn-primary">PDF Çıktısını Al</a>
+            <a href="PdfIndex2" target="_blank" class="btn btn-primary">PDF Çıktısını Al</a>
         </div>
     </div>
 </div>

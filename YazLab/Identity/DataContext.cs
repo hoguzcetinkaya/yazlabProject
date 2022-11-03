@@ -15,5 +15,6 @@ namespace YazLab.Identity
         }
 
         public DbSet<BasvuruModel> Stajs { get; set; }
+        public DbSet<BasvuruModelime> Imes { get; set; }
     }
 }

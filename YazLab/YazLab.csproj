@@ -3664,10 +3664,12 @@
     <Compile Include="Identity\IdentityContext.cs" />
     <Compile Include="Identity\IdentityInitilaizer.cs" />
     <Compile Include="Models\BasvuruModel.cs" />
+    <Compile Include="Models\BasvuruModelime.cs" />
     <Compile Include="Models\Giris.cs" />
     <Compile Include="Models\KullaniciEkleme.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Pdf\PdfAyarlari.cs" />
+    <Compile Include="Pdf\PdfAyarlari2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4035,6 +4037,7 @@
     <Content Include="Views\Ogrenci\StajBasvuru.cshtml" />
     <Content Include="Views\Ogrenci\RaporGonder.cshtml" />
     <Content Include="Views\Admin\BilgilendirmeSayfasi.cshtml" />
+    <Content Include="Views\Ogrenci\ImeBasvuru.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
