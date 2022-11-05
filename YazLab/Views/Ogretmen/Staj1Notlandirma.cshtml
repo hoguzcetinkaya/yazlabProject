@@ -25,11 +25,14 @@
                 <div class="row">
                     <!-- Left col -->
                     <section class="col-lg-7  connectedSortable">
-                        <!-- Custom tabs (Charts with tabs)-->
-                        <!-- /.card -->
-                        <!--/.direct-chat -->
-                        <!-- TO DO List -->
-                        <!-- /.card -->
+                        @if (TempData["hata"] != null)
+                        {
+                            <p class="alert alert-danger" id="successMessage">@TempData["hata"]</p>
+                        }
+                        @if (TempData["basarili"] != null)
+                        {
+                            <p class="alert alert-success" id="successMessage">@TempData["basarili"]</p>
+                        }
 
                         <table class="table" style="width:65rem; margin:auto">
 
@@ -54,7 +57,7 @@
                                     Staj Başvurum
                                 </th>
                                 <th colspan="2">Not</th>
-                                
+
                             </tr>
 
                             @foreach (var item in Model)
@@ -87,8 +90,8 @@
                                         }
                                         else
                                         {
-                                            <input type="text" name="@item.Staj1Not" class="col-md-8"/>
-                                            <button type="submit" class="btn btn-secondary">Not Ver</button>
+                                            <input type="text" name="not" class="col-md-8" />
+                                            <button type="submit" class="btn btn-secondary" name="id" value="@item.Id">Not Ver</button>
                                         }
                                     </td>
                                 </tr>

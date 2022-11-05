@@ -1,0 +1,112 @@
+﻿@model IEnumerable<YazLab.Models.BasvuruModel.Staj>
+@{
+    ViewBag.Title = "Staj2Notlandirma";
+    Layout = "~/Views/Shared/_Ogretmen.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="content-wrapper">
+        <h2>StajBasvurularım</h2>
+        <!-- Content Header (Page header) -->
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="row">
+                    <h1>Komisyon!!</h1>
+                    <!-- ./col -->
+                </div>
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7  connectedSortable">
+                        @if (TempData["hata"] != null)
+                        {
+                            <p class="alert alert-danger" id="successMessage">@TempData["hata"]</p>
+                        }
+                        @if (TempData["basarili"] != null)
+                        {
+                            <p class="alert alert-success" id="successMessage">@TempData["basarili"]</p>
+                        }
+
+                        <table class="table" style="width:65rem; margin:auto">
+
+                            <tr>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Ad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Soyad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajTuru)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajBaslangicTarihi)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajBitisTarihi)
+                                </th>
+                                <th>
+                                    Staj Başvurum
+                                </th>
+                                <th colspan="2">Not</th>
+
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+
+                                    <td>
+                                        @item.Ad
+                                    </td>
+                                    <td>
+                                        @item.Soyad
+                                    </td>
+                                    <td>
+                                        @item.StajTuru
+                                    </td>
+                                    <td>
+                                        @item.StajBaslangicTarihi
+                                    </td>
+                                    <td>
+                                        @item.StajBitisTarihi
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                    </td>
+                                    <td colspan="2">
+                                        @if (item.Staj2Not != 0)
+                                        {
+                                            @item.Staj2Not
+                                        }
+                                        else
+                                        {
+                                            <input type="text" name="not" class="col-md-8" />
+                                            <button type="submit" class="btn btn-secondary" name="id" value="@item.Id">Not Ver</button>
+                                        }
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <!-- right col -->
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+}
+

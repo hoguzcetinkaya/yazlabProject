@@ -17,6 +17,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace YazLab.Controllers
 {
+    //[Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         private UserManager<ApplicationUser> userManager;

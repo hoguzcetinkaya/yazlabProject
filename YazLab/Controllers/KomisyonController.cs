@@ -46,7 +46,7 @@ namespace YazLab.Controllers
         public ActionResult Staj2OnayBekleyenler()
         {
             DataContext db = new DataContext();
-            return View(db.Stajs.ToList().Where(x => x.Staj2OnayDurum == false && x.Staj2Durum == true));
+            return View(db.Stajs.ToList().Where(x => x.Staj2OnayDurum == false && x.Staj2Durum == true && x.Staj1Durum==true && x.Staj1OnayDurum==true));
         }
 
         [HttpPost]
@@ -65,6 +65,31 @@ namespace YazLab.Controllers
             }
 
             return RedirectToAction("Staj2OnayBekleyenler");
+
+        }
+
+
+        [HttpGet]
+        public ActionResult ImeOnayBekleyenler()
+        {
+            DataContext db = new DataContext();
+            return View(db.Imes.ToList().Where(x => x.ImeOnayDurum == false && x.ImeDurum == true));
+        }
+
+        [HttpPost]
+        public ActionResult ImeOnayBekleyenler(int id)
+        {
+            DataContext db = new DataContext();
+            var ımeBasvuru = new BasvuruModel.Staj();
+            var ımeBasvuruOnaylanacakOgrenci = db.Imes.Single(x => x.Id == id);
+
+            if (ımeBasvuruOnaylanacakOgrenci != null && ımeBasvuruOnaylanacakOgrenci.ImeDurum == true && ımeBasvuruOnaylanacakOgrenci.ImeOnayDurum == false)
+            {
+                ımeBasvuruOnaylanacakOgrenci.ImeOnayDurum = true;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("ImeOnayBekleyenler");
 
         }
     }

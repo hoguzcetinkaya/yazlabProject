@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 
 namespace YazLab.Controllers
 {
+    
     public class AccountController : Controller
     {
         private UserManager<ApplicationUser> userManager;
@@ -40,7 +41,7 @@ namespace YazLab.Controllers
                 var user = userManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
-                    if(userManager.IsInRole(user.Id,"ogrenci"))
+                    if (userManager.IsInRole(user.Id, "ogrenci"))
                     {
                         var authManager = HttpContext.GetOwinContext().Authentication;// kullanıcı girdi çıktılarını yönetmek için
                         var identityclaims = userManager.CreateIdentity(user, "ApplicationCookie"); // kullanıcı için cookie oluşturmak için
@@ -49,8 +50,18 @@ namespace YazLab.Controllers
                         authManager.SignOut();
                         authManager.SignIn(authProperties, identityclaims);
 
+                        if (user.OtoSifre == null)
+                        {
+                            return RedirectToAction("index", "Ogrenci");
+                        }
+                        else
+                        {
+                            return RedirectToAction("SifreGuncelle", "Account");
 
-                        return RedirectToAction("index", "Ogrenci");
+                        }
+
+
+
                     }
                     else
                     {
@@ -73,7 +84,7 @@ namespace YazLab.Controllers
         {
             return View();
         }
-        
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,7 +106,15 @@ namespace YazLab.Controllers
                         authManager.SignIn(authProperties, identityclaims);
 
                         ViewBag.userBilgi = user;
-                        return RedirectToAction("index", "Komisyon");
+                        if (user.OtoSifre == null)
+                        {
+                            return RedirectToAction("index", "Ogretmen");
+                        }
+                        else
+                        {
+                            return RedirectToAction("SifreGuncelle", "Account");
+
+                        }
                     }
                     else
                     {
@@ -137,7 +156,15 @@ namespace YazLab.Controllers
                         authManager.SignIn(authProperties, identityclaims);
 
 
-                        return RedirectToAction("index", "Admin");
+                        if (user.OtoSifre == null)
+                        {
+                            return RedirectToAction("index", "Admin");
+                        }
+                        else
+                        {
+                            return RedirectToAction("SifreGuncelle", "Account");
+
+                        }
                     }
                     else
                     {
@@ -153,6 +180,8 @@ namespace YazLab.Controllers
             }
             return View(model);
         }
+
+
         public ActionResult Cikis()
         {
             var authManager = HttpContext.GetOwinContext().Authentication;
@@ -162,7 +191,44 @@ namespace YazLab.Controllers
         }
 
 
+        public ActionResult SifreGuncelle()
+        {
+            string id = User.Identity.GetUserId();
+            ApplicationUser user = userManager.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View();
 
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SifreGuncelle(GuncelleModel.SifreGuncelle model)
+        {
+            
+
+
+                string id = User.Identity.GetUserId();
+                var user = userManager.Users.FirstOrDefault(x => x.Id == id);
+
+                //user.PasswordHash = model.Password;
+                user.PasswordHash = userManager.PasswordHasher.HashPassword(model.Password);
+
+                user.OtoSifre = null;
+                userManager.Update(user);
+                var authManager = HttpContext.GetOwinContext().Authentication;
+                authManager.SignOut();
+
+                
+                return RedirectToAction("GirisSec", "Account");
+            
+            
+
+
+        }
 
 
     }

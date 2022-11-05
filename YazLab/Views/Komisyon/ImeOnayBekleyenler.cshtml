@@ -1,0 +1,91 @@
+﻿@model IEnumerable<YazLab.Models.BasvuruModel.Ime>
+@{
+    ViewBag.Title = "ImeOnayBekleyenler";
+    Layout = "~/Views/Shared/_Komisyon.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="row">
+                    <h1>Komisyon!!</h1>
+                    <!-- ./col -->
+                </div>
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <!-- /.card -->
+                        <!--/.direct-chat -->
+                        <!-- TO DO List -->
+                        <!-- /.card -->
+
+                        <table class="table" style="width:65rem; margin:auto">
+
+                            <tr>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Ad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Soyad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model=>model.ImeDonem)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ImeBaslangicTarihi)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ImeBitisTarihi)
+                                </th>
+
+                                <th>Durum</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+
+                                    <td>
+                                        @item.Ad
+                                    </td>
+                                    <td>
+                                        @item.Soyad
+                                    </td>
+                                    <td>
+                                        @item.ImeDonem
+                                    </td>
+                                    <td>
+                                        @item.ImeBaslangicTarihi
+                                    </td>
+                                    <td>
+                                        @item.ImeBitisTarihi
+                                    </td>
+                                    <td>
+
+                                        <button type="submit" name="id" value="@item.Id" class="btn btn-success">Onayla</button>
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
+                    </section>
+                    
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+}

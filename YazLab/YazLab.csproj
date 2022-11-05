@@ -3666,9 +3666,11 @@
     <Compile Include="Identity\IdentityInitilaizer.cs" />
     <Compile Include="Models\BasvuruModel.cs" />
     <Compile Include="Models\Giris.cs" />
+    <Compile Include="Models\GuncelleModel.cs" />
     <Compile Include="Models\KullaniciEkleme.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Pdf\PdfAyarlari.cs" />
+    <Compile Include="Pdf\PdfAyarlariIme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4043,6 +4045,12 @@
     <Content Include="Views\Komisyon\Staj2OnayBekleyenler.cshtml" />
     <Content Include="Views\Ogrenci\StajBasvurularim.cshtml" />
     <Content Include="Views\Ogretmen\Staj1Notlandirma.cshtml" />
+    <Content Include="Views\Ogrenci\ImeBasvuru.cshtml" />
+    <Content Include="Views\Ogrenci\ImeBasvurularim.cshtml" />
+    <Content Include="Views\Komisyon\ImeOnayBekleyenler.cshtml" />
+    <Content Include="Views\Ogretmen\Staj2Notlandirma.cshtml" />
+    <Content Include="Views\Ogretmen\ImeNotlandirma.cshtml" />
+    <Content Include="Views\Account\SifreGuncelle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
