@@ -92,10 +92,10 @@ namespace YazLab.Controllers
                             {
                                 if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true)
                                 {
-                                    ModelState.AddModelError("", "Aktif staj 2 başvurunuz bulunmaktadır.");
+                                    ModelState.AddModelError("", "Onay bekleyen staj 2 başvurunuz bulunmaktadır.");
                                     return View(model);
                                 }
-                                else if (item.Staj1Durum == true && item.Staj1OnayDurum == true)
+                                else if (item.Staj1Not!=0)
                                 {
                                     basvuru.StajTuru = "Staj2";
                                     basvuru.Staj2Durum = true;
@@ -104,17 +104,32 @@ namespace YazLab.Controllers
                                 }
                                 else if (item.Staj1Not == 0)
                                 {
-                                    ModelState.AddModelError("", "Staj 1 tamamlanmadan Staj 2 başvurusu yapamazsınız");
+                                    ModelState.AddModelError("", "Staj 1 notlandırılmanız gerçekleşmemiş.");
                                     return View(model);
                                 }
                             }
                         }
                         else
                         {
-                            basvuru.StajTuru = "Staj2";
-                            basvuru.Staj2Durum = true;
-                            basvuru.Staj1Durum = true;
-                            basvuru.Staj1OnayDurum = true;
+                            var kullaniciStaj1Bilgi = db.Stajs.Where(x => x.User_Id == kullanici.Id && x.Staj1Durum==true && x.Staj1OnayDurum==true && x.Staj1Not != 0 && x.StajTuru == "Staj1").ToList();
+                            foreach (var item in kullaniciStaj1Bilgi)
+                            {
+                                if (kullaniciStaj1Bilgi.Count() != 0)
+                                {
+                                    basvuru.StajTuru = "Staj2";
+                                    basvuru.Staj2Durum = true;
+                                    basvuru.Staj1Durum = true;
+                                    basvuru.Staj1OnayDurum = true;
+                                    basvuru.Staj1Not = item.Staj1Not;
+                                }
+                                else
+                                {
+                                    ModelState.AddModelError("", "Önce staj 1 yapmalısınız");
+                                    return View(model);
+                                }
+                            }
+                            
+                            
                         }
                     }
                     basvuru.StajBaslangicTarihi = model.StajBaslangicTarihi;
@@ -191,6 +206,9 @@ namespace YazLab.Controllers
             return stajListe;
         }
 
+
+
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult StajBasvurumPDF(int id)
         {
@@ -221,78 +239,83 @@ namespace YazLab.Controllers
                     DataContext db = new DataContext();
                     ApplicationUser kullanici = userManager.FindByName(User.Identity.Name);
 
-                    var basvuru = new BasvuruModel.Ime();
-                    basvuru.Ad = model.Ad;
-                    basvuru.Soyad = model.Soyad;
-                    basvuru.TC = model.TC;
-                    basvuru.TelefonNumarasi = model.TelefonNumarasi;
-                    basvuru.Adres = model.Adres;
-                    if (model.ImeDonem == "1")
+                    var kullaniciStajBilgi = db.Stajs.Where(x=>x.User_Id==kullanici.Id && x.Staj1Durum==true && x.Staj1OnayDurum==true && x.Staj2Durum==true && x.Staj2OnayDurum==true && x.Staj1Not!=0 && x.Staj2Not!=0).ToList();
+                    if(kullaniciStajBilgi.Count()!=0)
                     {
-                        var kullaniciStajBilgi = db.Imes.Where(x => x.User_Id == kullanici.Id).ToList();
-                        if (kullaniciStajBilgi.Count() != 0)
+                        var basvuru = new BasvuruModel.Ime();
+                        basvuru.Ad = model.Ad;
+                        basvuru.Soyad = model.Soyad;
+                        basvuru.TC = model.TC;
+                        basvuru.TelefonNumarasi = model.TelefonNumarasi;
+                        basvuru.Adres = model.Adres;
+                        if (model.ImeDonem == "1")
                         {
-                            foreach (var item in kullaniciStajBilgi)
+                            var kullaniciIMEbilgi = db.Imes.Where(x => x.User_Id == kullanici.Id).ToList();
+                            if (kullaniciIMEbilgi.Count() != 0)
                             {
-                                if (item.ImeDurum == true)
+                                foreach (var item in kullaniciIMEbilgi)
                                 {
-                                    ModelState.AddModelError("", "Aktif ime başvurunuz bulunmaktadır ");
-                                    return View(model);
-                                }
-                                else
-                                {
-                                    basvuru.ImeDonem = "Güz";
-                                    basvuru.ImeDurum = true;
-                                }
+                                    if (item.ImeDurum == true)
+                                    {
+                                        ModelState.AddModelError("", "Aktif ime başvurunuz bulunmaktadır ");
+                                        return View(model);
+                                    }
+                                    else
+                                    {
+                                        basvuru.ImeDonem = "Güz";
+                                        basvuru.ImeDurum = true;
+                                    }
 
+                                }
+                            }
+                            else
+                            {
+                                basvuru.ImeDonem = "Güz";
+                                basvuru.ImeDurum = true;
                             }
                         }
-                        else
+                        if (model.ImeDonem == "2")
                         {
-                            basvuru.ImeDonem = "Güz";
-                            basvuru.ImeDurum = true;
-                        }
-                    }
-                    if (model.ImeDonem == "2")
-                    {
-                        var kullaniciStajBilgi = db.Imes.Where(x => x.User_Id == kullanici.Id).ToList();
-                        if (kullaniciStajBilgi.Count() != 0)
-                        {
-                            foreach (var item in kullaniciStajBilgi)
+                            var kullaniciIMEbilgi = db.Imes.Where(x => x.User_Id == kullanici.Id).ToList();
+                            if (kullaniciIMEbilgi.Count() != 0)
                             {
-                                if (item.ImeDurum == true)
+                                foreach (var item in kullaniciIMEbilgi)
                                 {
-                                    ModelState.AddModelError("", "Aktif ime başvurunuz bulunmaktadır ");
-                                    return View(model);
-                                }
-                                else
-                                {
-                                    basvuru.ImeDonem = "Bahar";
-                                    basvuru.ImeDurum = true;
-                                }
+                                    if (item.ImeDurum == true)
+                                    {
+                                        ModelState.AddModelError("", "Aktif ime başvurunuz bulunmaktadır ");
+                                        return View(model);
+                                    }
+                                    else
+                                    {
+                                        basvuru.ImeDonem = "Bahar";
+                                        basvuru.ImeDurum = true;
+                                    }
 
+                                }
+                            }
+                            else
+                            {
+                                basvuru.ImeDonem = "Bahar";
+                                basvuru.ImeDurum = true;
                             }
                         }
-                        else
-                        {
-                            basvuru.ImeDonem = "Bahar";
-                            basvuru.ImeDurum = true;
-                        }
+                        basvuru.ImeBaslangicTarihi = model.ImeBaslangicTarihi;
+                        basvuru.ImeBitisTarihi = model.ImeBitisTarihi;
+                        basvuru.IsGunu = model.IsGunu;
+                        basvuru.GenelSaglikSigortasi = model.GenelSaglikSigortasi;
+                        basvuru.YasDoldurma = model.YasDoldurma;
+                        basvuru.FirmaAd = model.FirmaAd;
+                        basvuru.FirmaFaaliyetAlani = model.FirmaFaaliyetAlani;
+                        basvuru.FirmaAdres = model.FirmaAdres;
+                        basvuru.FirmaTelefon = model.FirmaTelefon;
+                        basvuru.User_Id = kullanici.Id; //staj1 modelinde oluşturduğum user_ıd foreign key
+                        db.Imes.Add(basvuru);
+                        db.SaveChanges();
+                        TempData["Success"] = "Başvuru Başarılı";
+                        return RedirectToAction("Index", "Ogrenci");
                     }
-                    basvuru.ImeBaslangicTarihi = model.ImeBaslangicTarihi;
-                    basvuru.ImeBitisTarihi = model.ImeBitisTarihi;
-                    basvuru.IsGunu = model.IsGunu;
-                    basvuru.GenelSaglikSigortasi = model.GenelSaglikSigortasi;
-                    basvuru.YasDoldurma = model.YasDoldurma;
-                    basvuru.FirmaAd = model.FirmaAd;
-                    basvuru.FirmaFaaliyetAlani = model.FirmaFaaliyetAlani;
-                    basvuru.FirmaAdres = model.FirmaAdres;
-                    basvuru.FirmaTelefon = model.FirmaTelefon;
-                    basvuru.User_Id = kullanici.Id; //staj1 modelinde oluşturduğum user_ıd foreign key
-                    db.Imes.Add(basvuru);
-                    db.SaveChanges();
-                    TempData["Success"] = "Başvuru Başarılı";
-                    return RedirectToAction("Index", "Ogrenci");
+                    
                 }
                 else
                 {
@@ -353,6 +376,8 @@ namespace YazLab.Controllers
             return imeListe;
         }
 
+
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult ImeBasvurumPDF(int id)
         {
@@ -362,8 +387,25 @@ namespace YazLab.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult StajNotlarim()
+        {
+            DataContext db = new DataContext();
+            var kullaniciBilgi = userManager.FindByName(User.Identity.Name);
+
+            //staj notu 0 ise notlandırılma bekleniyor yaz!!!!!
+            return View(db.Stajs.Where(x => x.User_Id == kullaniciBilgi.Id).ToList());
+        }
+
+        [HttpGet]
+        public ActionResult ImeNotum()
+        {
+            DataContext db = new DataContext();
+            var kullaniciBilgi = userManager.FindByName(User.Identity.Name);
 
 
+            return View(db.Imes.Where(x => x.User_Id == kullaniciBilgi.Id && x.ImeNot!=0).ToList());
+        }
 
 
 

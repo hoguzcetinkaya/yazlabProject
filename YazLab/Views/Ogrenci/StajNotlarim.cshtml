@@ -1,0 +1,109 @@
+﻿@model IEnumerable<YazLab.Models.BasvuruModel.Staj>
+@{
+    ViewBag.Title = "Staj Notlarım";
+    Layout = "~/Views/Shared/_Ogrenci.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="content-wrapper">
+        <h2>StajBasvurularım</h2>
+        <!-- Content Header (Page header) -->
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="row">
+                    <h1>Komisyon!!</h1>
+                    <!-- ./col -->
+                </div>
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <!-- /.card -->
+                        <!--/.direct-chat -->
+                        <!-- TO DO List -->
+                        <!-- /.card -->
+
+                        <table class="table" style="width:65rem; margin:auto">
+
+                            <tr>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Ad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Soyad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajTuru)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajBaslangicTarihi)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajBitisTarihi)
+                                </th>
+                                <th>
+                                    Staj Başvurum
+                                </th>
+                                <th>Not</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+
+                                    <td>
+                                        @item.Ad
+                                    </td>
+                                    <td>
+                                        @item.Soyad
+                                    </td>
+                                    <td>
+                                        @item.StajTuru
+                                    </td>
+                                    <td>
+                                        @item.StajBaslangicTarihi
+                                    </td>
+                                    <td>
+                                        @item.StajBitisTarihi
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                    </td>
+                                    <td>
+                                        @if (item.StajTuru == "Staj1")
+                                        {
+                                            @item.Staj1Not
+                                        }
+                                        else
+                                        {
+                                            @item.Staj2Not
+                                        }
+
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable">
+                    </section>
+                    <!-- right col -->
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+}

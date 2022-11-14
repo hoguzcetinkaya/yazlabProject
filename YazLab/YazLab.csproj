@@ -4051,6 +4051,9 @@
     <Content Include="Views\Ogretmen\Staj2Notlandirma.cshtml" />
     <Content Include="Views\Ogretmen\ImeNotlandirma.cshtml" />
     <Content Include="Views\Account\SifreGuncelle.cshtml" />
+    <Content Include="Views\Ogrenci\StajNotlarim.cshtml" />
+    <Content Include="Views\Ogrenci\ImeNotum.cshtml" />
+    <Content Include="Views\Ogretmen\SorumluOldugumOgrenciler.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

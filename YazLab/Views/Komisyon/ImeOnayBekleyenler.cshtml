@@ -48,7 +48,7 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ImeBitisTarihi)
                                 </th>
-
+                                <th>İME Başvurusu</th>
                                 <th>Durum</th>
                             </tr>
 
@@ -71,6 +71,9 @@
                                     </td>
                                     <td>
                                         @item.ImeBitisTarihi
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("IME Başvurum", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
                                     </td>
                                     <td>
 

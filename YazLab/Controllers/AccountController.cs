@@ -209,7 +209,7 @@ namespace YazLab.Controllers
         public ActionResult SifreGuncelle(GuncelleModel.SifreGuncelle model)
         {
             
-
+            
 
                 string id = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(x => x.Id == id);
@@ -222,10 +222,12 @@ namespace YazLab.Controllers
                 var authManager = HttpContext.GetOwinContext().Authentication;
                 authManager.SignOut();
 
-                
                 return RedirectToAction("GirisSec", "Account");
             
-            
+           
+
+
+
 
 
         }

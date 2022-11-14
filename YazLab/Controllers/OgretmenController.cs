@@ -232,5 +232,16 @@ namespace YazLab.Controllers
             
             
         }
+
+
+        [HttpGet]
+        public ActionResult SorumluOldugumOgrenciler()
+        {
+
+            var ogretmen = userManager.FindByName(User.Identity.Name);
+
+            
+            return View(userManager.Users.Where(x => x.Sorumlu == ogretmen.Id).ToList());
+        }
     }
 }
