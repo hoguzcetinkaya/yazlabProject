@@ -10,26 +10,12 @@
 
 
     <div class="content-wrapper">
-        <h2>StajBasvurularım</h2>
-        <!-- Content Header (Page header) -->
-        <!-- /.content-header -->
-        <!-- Main content -->
+
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-
-                <div class="row">
-                    <h1>Komisyon!!</h1>
-                    <!-- ./col -->
-                </div>
                 <div class="row">
                     <!-- Left col -->
                     <section class="col-lg-7 connectedSortable">
-                        <!-- Custom tabs (Charts with tabs)-->
-                        <!-- /.card -->
-                        <!--/.direct-chat -->
-                        <!-- TO DO List -->
-                        <!-- /.card -->
 
                         <table class="table" style="width:65rem; margin:auto">
 
@@ -77,25 +63,42 @@
                                         @item.StajBitisTarihi
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new {id=item.Id},new {@class="btn btn-info"})
+                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
                                     </td>
                                     <td>
-                                        @if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true && item.Staj2OnayDurum == true)
+                                        @if (item.Staj1Red == true)
                                         {
-                                            <button name="id"  class="btn btn-success">Onaylandı</button>
+                                            <button name="id" class="btn btn-danger" disabled>Reddedildi</button>
+                                        }
+                                        else if (item.Staj1Red == false && item.Staj2Red == true)
+                                        {
+                                            <button name="id" class="btn btn-danger" disabled>Reddedildi</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == false && item.Staj2OnayDurum == false && item.Staj1Not != 0)
+                                        {
+                                            <button class="btn btn-info" disabled>Tamamlandı</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true && item.Staj2OnayDurum == true && item.Staj1Not != 0 && item.Staj2Not != 0)
+                                        {
+                                            <button class="btn btn-info" disabled>Tamamlandı</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true && item.Staj2OnayDurum == true)
+                                        {
+                                            <button name="id" class="btn btn-success" disabled>Onaylandı</button>
                                         }
                                         else if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true && item.Staj2OnayDurum == false)
                                         {
-                                            <button  name="id"  class="btn btn-warning">Onay Bekliyor</button>
+                                            <button name="id" class="btn btn-warning" disabled>Onay Bekliyor</button>
                                         }
                                         else if (item.Staj1Durum == true && item.Staj1OnayDurum == true)
                                         {
-                                            <button name="id"  class="btn btn-success">Onaylandı</button>
+                                            <button name="id" class="btn btn-success" disabled>Onaylandı</button>
                                         }
                                         else if (item.Staj1Durum == true && item.Staj1OnayDurum == false)
                                         {
-                                            <button name="id"  class="btn btn-warning">Onay Bekliyor</button>
+                                            <button name="id" class="btn btn-warning" disabled>Onay Bekliyor</button>
                                         }
+
 
                                     </td>
                                 </tr>

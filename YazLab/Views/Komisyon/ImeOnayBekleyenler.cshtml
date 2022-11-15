@@ -9,25 +9,13 @@
 
 
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <!-- /.content-header -->
-        <!-- Main content -->
+
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
 
                 <div class="row">
-                    <h1>Komisyon!!</h1>
-                    <!-- ./col -->
-                </div>
-                <div class="row">
                     <!-- Left col -->
-                    <section class="col-lg-7 connectedSortable">
-                        <!-- Custom tabs (Charts with tabs)-->
-                        <!-- /.card -->
-                        <!--/.direct-chat -->
-                        <!-- TO DO List -->
-                        <!-- /.card -->
+                    <section>
 
                         <table class="table" style="width:65rem; margin:auto">
 
@@ -40,7 +28,7 @@
                                     @Html.DisplayNameFor(model => model.Soyad)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model=>model.ImeDonem)
+                                    @Html.DisplayNameFor(model => model.ImeDonem)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.ImeBaslangicTarihi)
@@ -48,15 +36,17 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ImeBitisTarihi)
                                 </th>
-                                <th>İME Başvurusu</th>
-                                <th>Durum</th>
+                                <th>
+                                    İME Başvurusu
+                                </th>
+                                <th></th>
+                                <th></th>
                             </tr>
 
                             @foreach (var item in Model)
                             {
 
                                 <tr>
-
                                     <td>
                                         @item.Ad
                                     </td>
@@ -73,18 +63,20 @@
                                         @item.ImeBitisTarihi
                                     </td>
                                     <td>
-                                        @Html.ActionLink("IME Başvurum", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                        @Html.ActionLink("IME Başvuru", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
                                     </td>
                                     <td>
-
-                                        <button type="submit" name="id" value="@item.Id" class="btn btn-success">Onayla</button>
+                                        <button id="onay" type="submit" name="id" value="@item.Id" class="btn btn-success">Onayla</button>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Reddet", "IMERed", "Komisyon", new { id = item.Id }, new { @class = "btn btn-danger" })
                                     </td>
                                 </tr>
 
                             }
                         </table>
                     </section>
-                    
+
                 </div>
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->

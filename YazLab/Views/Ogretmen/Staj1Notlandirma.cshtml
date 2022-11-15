@@ -10,18 +10,9 @@
 
 
     <div class="content-wrapper">
-        <h2>StajBasvurularım</h2>
-        <!-- Content Header (Page header) -->
-        <!-- /.content-header -->
-        <!-- Main content -->
+
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-
-                <div class="row">
-                    <h1>Komisyon!!</h1>
-                    <!-- ./col -->
-                </div>
                 <div class="row">
                     <!-- Left col -->
                     <section class="col-lg-7  connectedSortable">
@@ -62,46 +53,47 @@
 
                             @foreach (var item in Model)
                             {
+                                if (item.Staj1Red == false && item.Staj2Red == false)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Ad
+                                        </td>
+                                        <td>
+                                            @item.Soyad
+                                        </td>
+                                        <td>
+                                            @item.StajTuru
+                                        </td>
+                                        <td>
+                                            @item.StajBaslangicTarihi
+                                        </td>
+                                        <td>
+                                            @item.StajBitisTarihi
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                        </td>
+                                        <td colspan="2">
+                                            @if (item.Staj1Not != 0)
+                                            {
+                                                @item.Staj1Not
+                                            }
+                                            else
+                                            {
+                                                <input type="text" name="not" class="col-md-8" />
+                                                <button type="submit" class="btn btn-secondary" name="id" value="@item.Id">Not Ver</button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
 
-                                <tr>
-
-                                    <td>
-                                        @item.Ad
-                                    </td>
-                                    <td>
-                                        @item.Soyad
-                                    </td>
-                                    <td>
-                                        @item.StajTuru
-                                    </td>
-                                    <td>
-                                        @item.StajBaslangicTarihi
-                                    </td>
-                                    <td>
-                                        @item.StajBitisTarihi
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
-                                    </td>
-                                    <td colspan="2">
-                                        @if (item.Staj1Not != 0)
-                                        {
-                                            @item.Staj1Not
-                                        }
-                                        else
-                                        {
-                                            <input type="text" name="not" class="col-md-8" />
-                                            <button type="submit" class="btn btn-secondary" name="id" value="@item.Id">Not Ver</button>
-                                        }
-                                    </td>
-                                </tr>
 
                             }
                         </table>
                     </section>
                     <!-- /.Left col -->
                     <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                    
                     <!-- right col -->
                 </div>
                 <!-- /.row (main row) -->

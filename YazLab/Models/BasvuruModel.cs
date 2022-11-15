@@ -33,10 +33,10 @@ namespace YazLab.Models
             [DisplayName("Staj Türünüz")]
             public string StajTuru { get; set; }
 
-            [DisplayName("Staj Başlangıç Tarihiniz")]
+            [DisplayName("Staj Başlangıç Tarihi")]
             public DateTime StajBaslangicTarihi{ get; set; }
 
-            [DisplayName("Staj Bitiş Tarihiniz")]
+            [DisplayName("Staj Bitiş Tarihi")]
             public DateTime StajBitisTarihi { get; set; }
 
             [DisplayName("Çalışılacak İş Gününüz")]
@@ -65,6 +65,9 @@ namespace YazLab.Models
 
             public bool Staj2Durum { get; set; }
             public bool Staj2OnayDurum { get; set; }
+
+            public bool Staj1Red { get; set; }
+            public bool Staj2Red { get; set; }
 
             public int Staj1Not { get; set; }
             public int Staj2Not { get; set; }
@@ -98,13 +101,13 @@ namespace YazLab.Models
             [Required]
             public string Adres { get; set; }
 
-            [DisplayName("Ime yapılacak dönem")]
+            [DisplayName("Ime dönem")]
             public string ImeDonem { get; set; }
 
-            [DisplayName("IME Başlangıç Tarihiniz")]
+            [DisplayName("IME Başlangıç Tarihi")]
             public DateTime ImeBaslangicTarihi { get; set; }
 
-            [DisplayName("IME Bitiş Tarihiniz")]
+            [DisplayName("IME Bitiş Tarihi")]
             public DateTime ImeBitisTarihi { get; set; }
 
             [DisplayName("Çalışılacak İş Gününüz")]
@@ -135,6 +138,7 @@ namespace YazLab.Models
             public int ImeNot { get; set; }
             public bool ImeDurum { get; set; }
             public bool ImeOnayDurum { get; set; }
+            public bool ImeRed { get; set; }
 
             public string User_Id { get; set; }
     }

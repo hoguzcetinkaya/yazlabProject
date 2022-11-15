@@ -38,6 +38,14 @@ namespace YazLab.Identity
                 manager.Create(role);
             }
 
+            if (!context.Roles.Any(i => i.Name == "komisyon"))
+            {
+                var store = new RoleStore<ApplicationRole>(context);
+                var manager = new RoleManager<ApplicationRole>(store);
+                var role = new ApplicationRole() { Name = "komisyon", Description = "komisyon rolu" };
+                manager.Create(role);
+            }
+
             //if (!context.Users.Any(i => i.Name == "batuhanaral"))
             //{
             //    var store = new UserStore<ApplicationUser>(context);

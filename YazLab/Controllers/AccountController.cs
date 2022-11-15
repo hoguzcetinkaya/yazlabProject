@@ -90,12 +90,52 @@ namespace YazLab.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult OgretmenGiris(Giris model)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    var user = userManager.Find(model.UserName, model.Password);
+            //    if (user != null)
+            //    {
+            //        if (userManager.IsInRole(user.Id, "ogretmen"))
+            //        {
+
+            //            var authManager = HttpContext.GetOwinContext().Authentication;// kullanıcı girdi çıktılarını yönetmek için
+            //            var identityclaims = userManager.CreateIdentity(user, "ApplicationCookie"); // kullanıcı için cookie oluşturmak için
+            //            var authProperties = new AuthenticationProperties();
+            //            authProperties.IsPersistent = model.RememberMe;//hatırlamak için
+            //            authManager.SignOut();
+            //            authManager.SignIn(authProperties, identityclaims);
+
+            //            ViewBag.userBilgi = user;
+            //            if (user.OtoSifre == null)
+            //            {
+            //                return RedirectToAction("index", "Ogretmen");
+            //            }
+            //            else
+            //            {
+            //                return RedirectToAction("SifreGuncelle", "Account");
+
+            //            }
+            //        }
+            //        else
+            //        {
+            //            ModelState.AddModelError("", "Giriş bilgilerinizi kontrol ediniz...");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ModelState.AddModelError("", "Kullanıcı bulunamadı");
+            //    }
+
+
+            //}
+            //return View(model);
+
             if (ModelState.IsValid)
             {
                 var user = userManager.Find(model.UserName, model.Password);
                 if (user != null)
                 {
-                    if (userManager.IsInRole(user.Id, "ogretmen"))
+                    if (userManager.IsInRole(user.Id, "ogretmen") && userManager.IsInRole(user.Id,"komisyon"))
                     {
 
                         var authManager = HttpContext.GetOwinContext().Authentication;// kullanıcı girdi çıktılarını yönetmek için
@@ -108,7 +148,7 @@ namespace YazLab.Controllers
                         ViewBag.userBilgi = user;
                         if (user.OtoSifre == null)
                         {
-                            return RedirectToAction("index", "Ogretmen");
+                            return RedirectToAction("index", "Komisyon");
                         }
                         else
                         {

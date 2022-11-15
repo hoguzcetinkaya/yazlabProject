@@ -5,28 +5,12 @@
 }
 @using (Html.BeginForm())
 {
-
-
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <!-- /.content-header -->
-        <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-
-                <div class="row">
-                    <h1>Komisyon!!</h1>
-                    <!-- ./col -->
-                </div>
                 <div class="row">
                     <!-- Left col -->
                     <section class="col-lg-7 connectedSortable">
-                        <!-- Custom tabs (Charts with tabs)-->
-                        <!-- /.card -->
-                        <!--/.direct-chat -->
-                        <!-- TO DO List -->
-                        <!-- /.card -->
 
                         <table class="table" style="width:65rem; margin:auto">
 
@@ -50,7 +34,8 @@
                                 <th>
                                     Staj Başvurusu
                                 </th>
-                                <th>Durum</th>
+                                <th></th>
+                                <th></th>
                             </tr>
 
                             @foreach (var item in Model)
@@ -62,7 +47,7 @@
                                         @item.Ad
                                     </td>
                                     <td>
-                                           @item.Soyad
+                                        @item.Soyad
                                     </td>
                                     <td>
                                         @item.StajTuru
@@ -74,11 +59,15 @@
                                         @item.StajBitisTarihi
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" }) 
+                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
                                     </td>
                                     <td>
-
-                                        <button type="submit" name="id" value="@item.Id" class="btn btn-success">Onayla</button>
+                                        
+                                        <button id="onay" type="submit" name="id" value="@item.Id" class="btn btn-success">Onayla</button>
+                                    </td>
+                                    <td>
+                                       
+                                        @Html.ActionLink("Reddet", "Staj1Red", "Komisyon",new { id = item.Id }, new { @class = "btn btn-danger" })
                                     </td>
                                 </tr>
 

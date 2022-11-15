@@ -26,21 +26,61 @@ namespace YazLab.Controllers
         [HttpPost]
         public ActionResult Staj1OnayBekleyenler(int id)
         {
+            
             DataContext db = new DataContext();
             var basvuruStaj1 = new BasvuruModel.Staj();
-            var staj1BasvuruOnaylanacakOgrenci = db.Stajs.Single(x=>x.Id==id);
+            var staj1BasvuruOnaylanacakOgrenci = db.Stajs.Where(x=>x.Id==id).ToList();
+            var staj1BasvuruOgrenci = staj1BasvuruOnaylanacakOgrenci.LastOrDefault();
             
-            if (staj1BasvuruOnaylanacakOgrenci != null && staj1BasvuruOnaylanacakOgrenci.Staj1Durum==true && staj1BasvuruOnaylanacakOgrenci.Staj1OnayDurum==false)
+            if (staj1BasvuruOnaylanacakOgrenci != null && staj1BasvuruOgrenci.Staj1Durum==true && staj1BasvuruOgrenci.Staj1OnayDurum==false && staj1BasvuruOgrenci.Staj1Red==false)
             {
-                staj1BasvuruOnaylanacakOgrenci.Staj1OnayDurum = true;
+                staj1BasvuruOgrenci.Staj1OnayDurum = true;
                 db.SaveChanges();
-
-               
             }
-            
             return RedirectToAction("Staj1OnayBekleyenler");
             
         }
+
+
+        [HttpGet]
+        public ActionResult Staj1Red(int id)
+        {
+            DataContext db = new DataContext();
+            var basvuruStaj1 = new BasvuruModel.Staj();
+            var staj1BasvuruRedOgrenci = db.Stajs.Where(x=>x.Id==id && x.StajTuru=="Staj1").ToList();
+            var staj1BasvuruOgrenci = staj1BasvuruRedOgrenci.LastOrDefault();
+            
+            if (staj1BasvuruRedOgrenci != null && staj1BasvuruOgrenci.Staj1Durum==true && staj1BasvuruOgrenci.Staj1OnayDurum==false && staj1BasvuruOgrenci.Staj1Red==false)
+            {
+                staj1BasvuruOgrenci.Staj1OnayDurum = true;
+                staj1BasvuruOgrenci.Staj1Red = true;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Staj1OnayBekleyenler");
+        }
+
+        [HttpGet]
+        public ActionResult Staj2Red(int id)
+        {
+            DataContext db = new DataContext();
+            var basvuruStaj1 = new BasvuruModel.Staj();
+            var staj1BasvuruRedOgrenci = db.Stajs.Where(x => x.Id == id && x.StajTuru=="Staj2").ToList();
+            var staj1BasvuruOgrenci = staj1BasvuruRedOgrenci.LastOrDefault();
+
+            if (staj1BasvuruRedOgrenci != null && staj1BasvuruOgrenci.Staj1Durum == true && staj1BasvuruOgrenci.Staj1OnayDurum == true && staj1BasvuruOgrenci.Staj2Durum==true && staj1BasvuruOgrenci.Staj2OnayDurum==false && staj1BasvuruOgrenci.Staj1Red == false && staj1BasvuruOgrenci.Staj2Red==false)
+            {
+                staj1BasvuruOgrenci.Staj1Durum = true;
+                staj1BasvuruOgrenci.Staj1OnayDurum = true;
+                staj1BasvuruOgrenci.Staj2Durum = true;
+                staj1BasvuruOgrenci.Staj2OnayDurum = true;
+                staj1BasvuruOgrenci.Staj1Red = false;
+                staj1BasvuruOgrenci.Staj2Red = true;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Staj2OnayBekleyenler");
+        }
+
+
 
         [HttpGet]
         public ActionResult Staj2OnayBekleyenler()
@@ -91,6 +131,24 @@ namespace YazLab.Controllers
 
             return RedirectToAction("ImeOnayBekleyenler");
 
+        }
+
+        [HttpGet]
+        public ActionResult IMERed(int id)
+        {
+            DataContext db = new DataContext();
+            var basvuruIME = new BasvuruModel.Ime();
+            var IMERedOgrenci = db.Imes.Where(x => x.Id == id).ToList();
+            var IMEBasvuruOgrenci = IMERedOgrenci.LastOrDefault();
+
+            if (IMERedOgrenci != null && IMEBasvuruOgrenci.ImeDurum == true && IMEBasvuruOgrenci.ImeOnayDurum==false && IMEBasvuruOgrenci.ImeRed==false)
+            {
+                IMEBasvuruOgrenci.ImeDurum = true;
+                IMEBasvuruOgrenci.ImeOnayDurum = true;
+                IMEBasvuruOgrenci.ImeRed = true;
+                db.SaveChanges();
+            }
+            return RedirectToAction("ImeOnayBekleyenler");
         }
     }
 }

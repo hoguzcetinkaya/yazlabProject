@@ -10,18 +10,9 @@
 
 
     <div class="content-wrapper">
-        <h2>StajBasvurularım</h2>
-        <!-- Content Header (Page header) -->
-        <!-- /.content-header -->
-        <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
 
-                <div class="row">
-                    <h1>Komisyon!!</h1>
-                    <!-- ./col -->
-                </div>
                 <div class="row">
                     <!-- Left col -->
                     <section class="col-lg-7  connectedSortable">
@@ -34,35 +25,36 @@
                             <p class="alert alert-success" id="successMessage">@TempData["basarili"]</p>
                         }
 
-                        <table class="table" style="width:65rem; margin:auto">
+                    <table class="table" style="width:65rem; margin:auto">
 
-                            <tr>
+                        <tr>
 
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Ad)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Soyad)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model=>model.ImeDonem)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ImeBaslangicTarihi)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ImeBitisTarihi)
-                                </th>
-                                <th>
-                                    Staj Başvurum
-                                </th>
-                                <th colspan="2">Not</th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Ad)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Soyad)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ImeDonem)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ImeBaslangicTarihi)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ImeBitisTarihi)
+                            </th>
+                            <th>
+                                Staj Başvurum
+                            </th>
+                            <th colspan="2">Not</th>
 
-                            </tr>
+                        </tr>
 
-                            @foreach (var item in Model)
+                        @foreach (var item in Model)
+                        {
+                            if (item.ImeRed == false)
                             {
-
                                 <tr>
 
                                     <td>
@@ -95,9 +87,11 @@
                                         }
                                     </td>
                                 </tr>
-
                             }
-                        </table>
+
+
+                        }
+                    </table>
                     </section>
                     <!-- /.Left col -->
                     <!-- right col (We are only adding the ID to make the widgets sortable)-->

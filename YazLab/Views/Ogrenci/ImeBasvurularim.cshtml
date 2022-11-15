@@ -10,26 +10,13 @@
 
 
     <div class="content-wrapper">
-        <h2>StajBasvurularım</h2>
-        <!-- Content Header (Page header) -->
-        <!-- /.content-header -->
-        <!-- Main content -->
+
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-
+ 
                 <div class="row">
-                    <h1>Komisyon!!</h1>
-                    <!-- ./col -->
-                </div>
-                <div class="row">
-                    <!-- Left col -->
                     <section class="col-lg-7 connectedSortable">
-                        <!-- Custom tabs (Charts with tabs)-->
-                        <!-- /.card -->
-                        <!--/.direct-chat -->
-                        <!-- TO DO List -->
-                        <!-- /.card -->
+
 
                         <table class="table" style="width:65rem; margin:auto">
 
@@ -80,13 +67,21 @@
                                         @Html.ActionLink("IME Başvurum", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
                                     </td>
                                     <td>
-                                        @if (item.ImeOnayDurum==true)
+                                        @if (item.ImeRed == true)
                                         {
-                                            <button name="id" class="btn btn-success">Onaylandı</button>
+                                            <button name="id" class="btn btn-danger" disabled>Reddedildi</button>
                                         }
-                                        else if (item.ImeOnayDurum==false)
+                                        else if (item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot == 0 && item.ImeRed == false)
                                         {
-                                            <button name="id" class="btn btn-warning">Onay Bekliyor</button>
+                                            <button name="id" class="btn btn-success" disabled>Onaylandı</button>
+                                        }
+                                        else if (item.ImeDurum == true && item.ImeOnayDurum == false && item.ImeNot == 0 && item.ImeRed == false)
+                                        {
+                                            <button name="id" class="btn btn-warning" disabled>Onay Bekliyor</button>
+                                        }
+                                        else if (item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot != 0 && item.ImeRed == false)
+                                        {
+                                            <button class="btn btn-info" disabled>Tamamlandı</button>
                                         }
 
                                     </td>
