@@ -160,11 +160,6 @@ namespace YazLab.Controllers
             return View(model);
         }
 
-        
-
-
-
-
 
         //Rol işlemleri
         public ActionResult RoleIndex()

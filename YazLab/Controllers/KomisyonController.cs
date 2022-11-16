@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +12,25 @@ namespace YazLab.Controllers
 {
     public class KomisyonController : Controller
     {
+        private UserManager<ApplicationUser> userManager;
+        private RoleManager<IdentityRole> roleManager;
+        public KomisyonController()
+        {
+            userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityContext()));
+            roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new IdentityContext()));
+        }
         // GET: Komisyon
         public ActionResult Index()
         {
-            return View();
+            var user = userManager.FindByName(User.Identity.Name);
+            if (user != null)
+            {
+                if (userManager.IsInRole(user.Id, "ogretmen") && userManager.IsInRole(user.Id,"komisyon"))
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("Index","Ogretmen");        
         }
 
         [HttpGet]
