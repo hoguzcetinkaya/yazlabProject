@@ -240,8 +240,71 @@ namespace YazLab.Controllers
 
             var ogretmen = userManager.FindByName(User.Identity.Name);
 
-            
             return View(userManager.Users.Where(x => x.Sorumlu == ogretmen.Id).ToList());
+        }
+
+
+        [HttpGet]
+        public ActionResult OgrenciStaj1Bilgi(string id)
+        {
+            DataContext db = new DataContext();
+            if(id!=null)
+            {
+                var ogrenci = userManager.FindByName(id);
+                var ogrenciStaj1Bilgi = db.Stajs.Where(x => x.User_Id == ogrenci.Id && x.StajTuru=="Staj1" ).ToList();
+                if(ogrenciStaj1Bilgi.Count()!=0)
+                {
+                    return View(ogrenciStaj1Bilgi);
+                }
+                else
+                {
+                    TempData["hata"] = "Öğrencinin staj başvurusu bulunmamaktadır";
+                    return RedirectToAction("SorumluOldugumOgrenciler");
+                }
+            }
+            return RedirectToAction("SorumluOldugumOgrenciler");
+        }
+
+        [HttpGet]
+        public ActionResult OgrenciStaj2Bilgi(string id)
+        {
+            DataContext db = new DataContext();
+            if (id != null)
+            {
+                var ogrenci = userManager.FindByName(id);
+                var ogrenciStaj2Bilgi = db.Stajs.Where(x => x.User_Id == ogrenci.Id && x.StajTuru == "Staj2").ToList();
+                if (ogrenciStaj2Bilgi.Count() != 0)
+                {
+                    return View(ogrenciStaj2Bilgi);
+                }
+                else
+                {
+                    TempData["hata"] = "Öğrencinin staj başvurusu bulunmamaktadır";
+                    return RedirectToAction("SorumluOldugumOgrenciler");
+                }
+            }
+            return RedirectToAction("SorumluOldugumOgrenciler");
+        }
+
+        [HttpGet]
+        public ActionResult OgrenciIMEBilgi(string id)
+        {
+            DataContext db = new DataContext();
+            if (id != null)
+            {
+                var ogrenci = userManager.FindByName(id);
+                var ogrenciIMEBilgi = db.Imes.Where(x => x.User_Id == ogrenci.Id).ToList();
+                if (ogrenciIMEBilgi.Count() != 0)
+                {
+                    return View(ogrenciIMEBilgi);
+                }
+                else
+                {
+                    TempData["hata"] = "Öğrencinin İME başvurusu bulunmamaktadır";
+                    return RedirectToAction("SorumluOldugumOgrenciler");
+                }
+            }
+            return RedirectToAction("SorumluOldugumOgrenciler");
         }
     }
 }

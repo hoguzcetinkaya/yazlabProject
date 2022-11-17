@@ -4054,6 +4054,9 @@
     <Content Include="Views\Ogrenci\StajNotlarim.cshtml" />
     <Content Include="Views\Ogrenci\ImeNotum.cshtml" />
     <Content Include="Views\Ogretmen\SorumluOldugumOgrenciler.cshtml" />
+    <Content Include="Views\Ogretmen\OgrenciStaj1Bilgi.cshtml" />
+    <Content Include="Views\Ogretmen\OgrenciStaj2Bilgi.cshtml" />
+    <Content Include="Views\Ogretmen\OgrenciIMEBilgi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -38,7 +38,7 @@
                                     @Html.DisplayNameFor(model => model.ImeBitisTarihi)
                                 </th>
                                 <th>
-                                    Staj Başvurum
+                                    İME Başvurum
                                 </th>
                                 <th>Durum</th>
                             </tr>
@@ -64,7 +64,7 @@
                                         @item.ImeBitisTarihi
                                     </td>
                                     <td>
-                                        @Html.ActionLink("IME Başvurum", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                        @Html.ActionLink("IME Başvurusu", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
                                     </td>
                                     <td>
                                         @if (item.ImeRed == true)
@@ -90,11 +90,7 @@
                             }
                         </table>
                     </section>
-                    <!-- /.Left col -->
-                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                    <section class="col-lg-5 connectedSortable">
-                    </section>
-                    <!-- right col -->
+
                 </div>
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->

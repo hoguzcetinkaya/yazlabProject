@@ -1,0 +1,101 @@
+﻿@model IEnumerable<YazLab.Models.BasvuruModel.Ime>
+@{
+    ViewBag.Title = "OgrenciIMEBilgi";
+    Layout = "~/Views/Shared/_Ogretmen.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="content-wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <section class="col-lg-7 connectedSortable">
+
+
+                        <table class="table" style="width:65rem; margin:auto">
+
+                            <tr>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Ad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Soyad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ImeDonem)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ImeBaslangicTarihi)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ImeBitisTarihi)
+                                </th>
+                                <th>
+                                    İME Başvurum
+                                </th>
+                                <th>Durum</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+
+                                    <td>
+                                        @item.Ad
+                                    </td>
+                                    <td>
+                                        @item.Soyad
+                                    </td>
+                                    <td>
+                                        @item.ImeDonem
+                                    </td>
+                                    <td>
+                                        @item.ImeBaslangicTarihi
+                                    </td>
+                                    <td>
+                                        @item.ImeBitisTarihi
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("IME Başvurusu", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                    </td>
+                                    <td>
+                                        @if (item.ImeRed == true)
+                                        {
+                                            <button name="id" class="btn btn-danger" disabled>Reddedildi</button>
+                                        }
+                                        else if (item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot == 0 && item.ImeRed == false)
+                                        {
+                                            <button name="id" class="btn btn-success" disabled>Onaylandı</button>
+                                        }
+                                        else if (item.ImeDurum == true && item.ImeOnayDurum == false && item.ImeNot == 0 && item.ImeRed == false)
+                                        {
+                                            <button name="id" class="btn btn-warning" disabled>Onay Bekliyor</button>
+                                        }
+                                        else if (item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot != 0 && item.ImeRed == false)
+                                        {
+                                            <button class="btn btn-info" disabled>Tamamlandı</button>
+                                        }
+
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
+                    </section>
+
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+}
+

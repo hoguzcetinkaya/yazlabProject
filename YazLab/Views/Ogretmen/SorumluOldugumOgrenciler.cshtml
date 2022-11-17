@@ -10,9 +10,13 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+                
                 <!-- Left col -->
                 <section class="col-lg-7 connectedSortable">
-
+                    @if (TempData["hata"] != null)
+                    {
+                        <p class="alert alert-danger" id="successMessage">@TempData["hata"]</p>
+                    }
 
                     <table class="table" style="width:65rem; margin:auto">
                         <tr>
@@ -28,7 +32,9 @@
                             <th>
                                 Okul Numarası
                             </th>
-                            
+                            <th>Staj1 Bilgi</th>
+                            <th>Staj2 Bilgi</th>
+                            <th>İME Bilgi</th>
                         </tr>
                         @foreach (var item in Model)
                         {
@@ -45,12 +51,20 @@
                                 <td>
                                     @item.OkulNumara
                                 </td>
-                                
+                                <td>
+                                    @Html.ActionLink("Durum", "OgrenciStaj1Bilgi", new { id = item.UserName }, new { @class = "btn btn-info" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Durum", "OgrenciStaj2Bilgi", new { id = item.UserName }, new { @class = "btn btn-info" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Durum", "OgrenciIMEBilgi", new { id = item.UserName }, new { @class = "btn btn-info" })
+                                </td>
                             </tr>
                         }
                     </table>
                 </section>
-                
+
             </div>
         </div>
     </section>
