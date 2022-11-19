@@ -1,0 +1,115 @@
+﻿@model IEnumerable<YazLab.Models.BasvuruModel.Staj>
+@{
+    ViewBag.Title = "OgrenciStaj1Basvuru";
+    Layout = "~/Views/Shared/_Ogretmen.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+
+
+    <div class="content-wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable">
+
+                        <table class="table" style="width:65rem; margin:auto">
+
+                            <tr>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Ad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Soyad)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajTuru)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajBaslangicTarihi)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StajBitisTarihi)
+                                </th>
+                                <th>
+                                    Staj Başvurusu
+                                </th>
+                                <th>Durum</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+
+                                    <td>
+                                        @item.Ad
+                                    </td>
+                                    <td>
+                                        @item.Soyad
+                                    </td>
+                                    <td>
+                                        @item.StajTuru
+                                    </td>
+                                    <td>
+                                        @item.StajBaslangicTarihi
+                                    </td>
+                                    <td>
+                                        @item.StajBitisTarihi
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Staj Başvurusu", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                    </td>
+                                    <td>
+                                        @if (item.Staj1Red == true)
+                                        {
+                                            <button name="id" class="btn btn-danger" disabled>Reddedildi</button>
+                                        }
+                                        else if (item.Staj1Red == false && item.Staj2Red == true)
+                                        {
+                                            <button name="id" class="btn btn-danger" disabled>Reddedildi</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == false && item.Staj2OnayDurum == false && item.Staj1Not != 0)
+                                        {
+                                            <button class="btn btn-info" disabled>Tamamlandı</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true && item.Staj2OnayDurum == true && item.Staj1Not != 0 && item.Staj2Not != 0)
+                                        {
+                                            <button class="btn btn-info" disabled>Tamamlandı</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true && item.Staj2OnayDurum == true)
+                                        {
+                                            <button name="id" class="btn btn-success" disabled>Onaylandı</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj2Durum == true && item.Staj2OnayDurum == false)
+                                        {
+                                            <button name="id" class="btn btn-warning" disabled>Onay Bekliyor</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == true)
+                                        {
+                                            <button name="id" class="btn btn-success" disabled>Onaylandı</button>
+                                        }
+                                        else if (item.Staj1Durum == true && item.Staj1OnayDurum == false)
+                                        {
+                                            <button name="id" class="btn btn-warning" disabled>Onay Bekliyor</button>
+                                        }
+
+
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
+                    </section>
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+}

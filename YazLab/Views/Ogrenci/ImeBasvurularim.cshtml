@@ -64,7 +64,7 @@
                                         @item.ImeBitisTarihi
                                     </td>
                                     <td>
-                                        @Html.ActionLink("IME Başvurum", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                        @Html.ActionLink("IME Başvurum", "ImeBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" ,@target = "_blank" })
                                     </td>
                                     <td>
                                         @if (item.ImeRed == true)

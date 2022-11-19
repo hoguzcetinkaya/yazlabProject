@@ -12,6 +12,8 @@ using YazLab.Identity;
 using YazLab.Models;
 using YazLab.Pdf;
 using static iTextSharp.text.pdf.AcroFields;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace YazLab.Controllers
 {
@@ -44,7 +46,7 @@ namespace YazLab.Controllers
             {
                 TimeSpan gunFarki = model.StajBitisTarihi - model.StajBaslangicTarihi;
                 double gun = gunFarki.TotalDays;
-                if (model.IsGunu == 30)
+                if (model.IsGunu == 30 && gun==42)
                 {
                     DataContext db = new DataContext();
                     ApplicationUser kullanici = userManager.FindByName(User.Identity.Name);
@@ -57,24 +59,24 @@ namespace YazLab.Controllers
                     basvuru.Adres = model.Adres;
                     if (model.StajTuru == "1")
                     {
-                        var kullaniciStajBilgi = db.Stajs.Where(x => x.User_Id == kullanici.Id && x.StajTuru=="Staj1").ToList();
-                        
+                        var kullaniciStajBilgi = db.Stajs.Where(x => x.User_Id == kullanici.Id && x.StajTuru == "Staj1").ToList();
+
                         if (kullaniciStajBilgi.Count() != 0)
                         {
                             foreach (var item in kullaniciStajBilgi)
                             {
-                                if(item.Staj1Durum==true && item.Staj1OnayDurum==true && item.Staj1Red==true)
+                                if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj1Red == true)
                                 {
                                     basvuru.StajTuru = "Staj1";
                                     basvuru.Staj1Durum = true;
                                     basvuru.Staj1Red = false;
                                 }
-                                if (item.Staj1Durum == true && item.Staj1OnayDurum==false && item.Staj1Red==false)
+                                if (item.Staj1Durum == true && item.Staj1OnayDurum == false && item.Staj1Red == false)
                                 {
                                     ModelState.AddModelError("", "Onay bekleyen staj 1 başvurunuz bulunmaktadır ");
                                     return View(model);
                                 }
-                                if(item.Staj1Durum==true && item.Staj1OnayDurum==true && item.Staj1Red==false && item.Staj1Not==0)
+                                if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj1Red == false && item.Staj1Not == 0)
                                 {
                                     ModelState.AddModelError("", "Staj 1 tamamlanmıştır not girişi bekleniyor ");
                                     return View(model);
@@ -101,20 +103,21 @@ namespace YazLab.Controllers
                         {
                             foreach (var item in kullaniciStajBilgi)
                             {
-                                if(item.Staj1Durum==true && item.Staj1OnayDurum==true && item.Staj1Not!=0 && item.Staj2Durum==true && item.Staj2OnayDurum==true && item.Staj2Not==0 && item.Staj1Red==false && item.Staj2Red==true)
+                                if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj1Not != 0 && item.Staj2Durum == true && item.Staj2OnayDurum == true && item.Staj2Not == 0 && item.Staj1Red == false && item.Staj2Red == true)
                                 {
                                     basvuru.StajTuru = "Staj2";
                                     basvuru.Staj2Durum = true;
                                     basvuru.Staj1Durum = true;
                                     basvuru.Staj1OnayDurum = true;
                                     basvuru.Staj1Not = item.Staj1Not;
+                                    basvuru.Staj1RaporPdf = item.Staj1RaporPdf;
                                 }
-                                if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj1Not != 0 && item.Staj2Durum == true && item.Staj2OnayDurum == true && item.Staj2Not == 0 && item.Staj1Red==false && item.Staj2Red==false)
+                                if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj1Not != 0 && item.Staj2Durum == true && item.Staj2OnayDurum == true && item.Staj2Not == 0 && item.Staj1Red == false && item.Staj2Red == false)
                                 {
                                     ModelState.AddModelError("", "Staj 2 tamamlanmıştır not girişi bekleniyor ");
                                     return View(model);
                                 }
-                                if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj1Not!=0 &&item.Staj1Red==false && item.Staj2Durum == true && item.Staj2Not==0 && item.Staj2Red==false)
+                                if (item.Staj1Durum == true && item.Staj1OnayDurum == true && item.Staj1Not != 0 && item.Staj1Red == false && item.Staj2Durum == true && item.Staj2Not == 0 && item.Staj2Red == false)
                                 {
                                     ModelState.AddModelError("", "Onay bekleyen staj 2 başvurunuz bulunmaktadır.");
                                     return View(model);
@@ -124,13 +127,13 @@ namespace YazLab.Controllers
                                     ModelState.AddModelError("", "Staj 2 tamamlanmıştır tekrar başvuruda bulunamazsınız ");
                                     return View(model);
                                 }
-                               
+
                             }
                         }
                         else
                         {
-                            var kullaniciStaj1Bilgi = db.Stajs.Where(x => x.User_Id == kullanici.Id && x.Staj1Durum==true && x.Staj1OnayDurum==true && x.Staj1Not != 0 && x.StajTuru == "Staj1").ToList();
-                            if(kullaniciStaj1Bilgi.Count()==0)
+                            var kullaniciStaj1Bilgi = db.Stajs.Where(x => x.User_Id == kullanici.Id && x.Staj1Durum == true && x.Staj1OnayDurum == true && x.Staj1Not != 0 && x.StajTuru == "Staj1").ToList();
+                            if (kullaniciStaj1Bilgi.Count() == 0)
                             {
                                 ModelState.AddModelError("", "Önce staj 1 tamamlamalısınız");
                                 return View(model);
@@ -141,6 +144,7 @@ namespace YazLab.Controllers
                                 {
                                     if (kullaniciStaj1Bilgi.Count() != 0)
                                     {
+                                        basvuru.Staj1RaporPdf = item.Staj1RaporPdf;
                                         basvuru.StajTuru = "Staj2";
                                         basvuru.Staj2Durum = true;
                                         basvuru.Staj1Durum = true;
@@ -148,7 +152,7 @@ namespace YazLab.Controllers
                                         basvuru.Staj1Not = item.Staj1Not;
                                     }
                                 }
-                            } 
+                            }
                         }
                     }
                     basvuru.StajBaslangicTarihi = model.StajBaslangicTarihi;
@@ -253,13 +257,13 @@ namespace YazLab.Controllers
             {
                 TimeSpan gunFarki = model.ImeBitisTarihi - model.ImeBaslangicTarihi;
                 double gun = gunFarki.TotalDays;
-                if (model.IsGunu == 30)
+                if (model.IsGunu == 70)
                 {
                     DataContext db = new DataContext();
                     ApplicationUser kullanici = userManager.FindByName(User.Identity.Name);
 
-                    var kullaniciStajBilgi = db.Stajs.Where(x=>x.User_Id==kullanici.Id && x.Staj1Durum==true && x.Staj1OnayDurum==true && x.Staj2Durum==true && x.Staj2OnayDurum==true && x.Staj1Not!=0 && x.Staj2Not!=0 && x.Staj1Red==false && x.Staj2Red==false).ToList();
-                    if(kullaniciStajBilgi.Count()!=0)
+                    var kullaniciStajBilgi = db.Stajs.Where(x => x.User_Id == kullanici.Id && x.Staj1Durum == true && x.Staj1OnayDurum == true && x.Staj2Durum == true && x.Staj2OnayDurum == true && x.Staj1Not != 0 && x.Staj2Not != 0 && x.Staj1Red == false && x.Staj2Red == false).ToList();
+                    if (kullaniciStajBilgi.Count() != 0)
                     {
                         var basvuru = new BasvuruModel.Ime();
                         basvuru.Ad = model.Ad;
@@ -274,27 +278,27 @@ namespace YazLab.Controllers
                             {
                                 foreach (var item in kullaniciIMEbilgi)
                                 {
-                                    if(item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot == 0 && item.ImeRed == true)
+                                    if (item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot == 0 && item.ImeRed == true)
                                     {
                                         basvuru.ImeDonem = "Güz";
                                         basvuru.ImeDurum = true;
                                     }
-                                    else if (item.ImeDurum == true && item.ImeOnayDurum==false && item.ImeNot==0 && item.ImeRed==false)
+                                    else if (item.ImeDurum == true && item.ImeOnayDurum == false && item.ImeNot == 0 && item.ImeRed == false)
                                     {
                                         ModelState.AddModelError("", "Onay bekleyen İME başvurunuz bulunmaktadır.");
                                         return View(model);
                                     }
-                                    else if(item.ImeDurum==true && item.ImeOnayDurum==true && item.ImeNot==0 && item.ImeRed==false)
+                                    else if (item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot == 0 && item.ImeRed == false)
                                     {
                                         ModelState.AddModelError("", "İme başvurunuz onaylanmıştır not girişi bekleniyor.");
                                         return View(model);
                                     }
-                                    else if(item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot != 0 && item.ImeRed == false)
+                                    else if (item.ImeDurum == true && item.ImeOnayDurum == true && item.ImeNot != 0 && item.ImeRed == false)
                                     {
                                         ModelState.AddModelError("", "İme başvurunuz tamamlanmıştır tekrar başvuruda bulunamazsınız");
                                         return View(model);
                                     }
-                                    
+
 
                                 }
                             }
@@ -360,7 +364,7 @@ namespace YazLab.Controllers
                         ModelState.AddModelError("", "Stajlarınız tamamlanmadan İME başvurusu yapamazsınız");
                         return View(model);
                     }
-                    
+
                 }
                 else
                 {
@@ -448,18 +452,110 @@ namespace YazLab.Controllers
             var kullaniciBilgi = userManager.FindByName(User.Identity.Name);
 
 
-            return View(db.Imes.Where(x => x.User_Id == kullaniciBilgi.Id && x.ImeNot!=0).ToList());
+            return View(db.Imes.Where(x => x.User_Id == kullaniciBilgi.Id && x.ImeNot != 0).ToList());
         }
 
 
 
 
+        DataContext db = new DataContext();
+        [HttpGet]
+        public ActionResult RaporYukleme()
+        {
+            return View();
+        }
 
-        //[HttpPost]  PDF İÇİN BÖYLE YAP
-        //public ActionResult StajBasvurularim(string id)
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public ActionResult RaporYukleme(string secim, string OgrenciPdf)
+        {
+            if (Request.Files.Count > 0)
+            {
+                string id = User.Identity.GetUserId();
+                if (secim == "staj1")
+                {
+                    var kullanici = db.Stajs.Where(x => x.User_Id == id && x.StajTuru == "Staj1" && x.Staj1Durum == true && x.Staj1OnayDurum == true && x.Staj1Red == false && x.Staj1Not == 0 && x.Staj1RaporPdf == null).ToList();
+                    if (kullanici.Count() != 0)
+                    {
+                        foreach (var item in kullanici)
+                        {
+                            string dosyaAdi = Path.GetFileName(Request.Files[0].FileName);
+                            string uzanti = Path.GetExtension(Request.Files[0].FileName);
+                            string yol = "~/PdfDepo/" + dosyaAdi;
+                            Request.Files[0].SaveAs(Server.MapPath(yol));
+                            item.Staj1RaporPdf = "/PdfDepo/" + dosyaAdi;
+                            db.SaveChanges();
+                            TempData["basarili"] = "Staj 1 rapor yüklemesi başarılıdır";
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Staj 1 rapor yüklemesi için gerekli koşulları sağlamıyorsunuz!!");
+                        return View();
+                    }
+
+                }
+                else if (secim == "staj2")
+                {
+                    var kullanici = db.Stajs.Where(x => x.User_Id == id && x.StajTuru == "Staj2" && x.Staj1Durum == true && x.Staj1OnayDurum == true && x.Staj1Red == false && x.Staj1Not != 0 && x.Staj1RaporPdf != null && x.Staj2OnayDurum == true && x.Staj2Durum == true && x.Staj2Red == false && x.Staj2RaporPdf == null).ToList();
+                    if (kullanici.Count() != 0)
+                    {
+                        foreach (var item in kullanici)
+                        {
+                            string dosyaAdi = Path.GetFileName(Request.Files[0].FileName);
+                            string uzanti = Path.GetExtension(Request.Files[0].FileName);
+                            string yol = "~/PdfDepo/" + dosyaAdi;
+                            Request.Files[0].SaveAs(Server.MapPath(yol));
+                            item.Staj2RaporPdf = "/PdfDepo/" + dosyaAdi;
+                            db.SaveChanges();
+                            TempData["basarili"] = "Staj 2 rapor yüklemesi başarılıdır";
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Staj2 rapor yüklemesi için gerekli koşulları sağlamıyorsunuz!!");
+                        return View();
+                    }
+
+
+                }
+                else if (secim == "ime")
+                {
+                    var kullanici = db.Imes.Where(x => x.User_Id == id && x.ImeOnayDurum == true && x.ImeDurum == true && x.RaporPdf == null).ToList();
+                    if (kullanici.Count() != 0)
+                    {
+                        foreach (var item in kullanici)
+                        {
+                            string dosyaAdi = Path.GetFileName(Request.Files[0].FileName);
+                            string uzanti = Path.GetExtension(Request.Files[0].FileName);
+                            string yol = "~/PdfDepo/" + dosyaAdi;
+                            Request.Files[0].SaveAs(Server.MapPath(yol));
+                            item.RaporPdf = "/PdfDepo/" + dosyaAdi;
+                            db.SaveChanges();
+                            TempData["basarili"] = "İme rapor yüklemesi başarılıdır";
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Ime rapor yüklemesi için gerekli koşulları sağlamıyorsunuz!!");
+                        return View();
+                    }
+                }
+                return View();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Dosya yüklemesi yapmalısınız");
+                return View();
+            }
+
+
+
+
+
+        }
     }
-    }
+}
 

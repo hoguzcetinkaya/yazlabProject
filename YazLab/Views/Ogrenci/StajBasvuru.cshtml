@@ -8,7 +8,7 @@
     <div class="col-md-9">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Kayıt Ekle</h3>
+                <h3 class="card-title">Staj Başvurusu Yap</h3>
             </div>
 
             @using (Html.BeginForm())
@@ -38,14 +38,14 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.TC, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.TC, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.TC, new { htmlAttributes = new { @class = "form-control", @maxlenght = "11" } })
                             @Html.ValidationMessageFor(model => model.TC, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.TelefonNumarasi, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.TelefonNumarasi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.TelefonNumarasi, new { htmlAttributes = new { @class = "form-control", @maxlenght = "11" } })
                             @Html.ValidationMessageFor(model => model.TelefonNumarasi, "", new { @class = "text-danger" })
                         </div>
                     </div>

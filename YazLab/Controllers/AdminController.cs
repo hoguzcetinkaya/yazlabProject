@@ -87,18 +87,6 @@ namespace YazLab.Controllers
         public ActionResult Index()
         {
 
-
-
-
-
-
-            //var user = userManager.FindByName(User.Identity.Name);
-            //if (user != null)
-            //{
-            //    ViewBag.v = user.Email;
-            //}
-
-
             return View(userManager.Users);
         }
 
@@ -136,17 +124,17 @@ namespace YazLab.Controllers
                 user.Seflink = seflinkKullaniciAdi;
                 var a = CreateRandomPassword(8);
                 user.OtoSifre = a;
-                string subject = "Staj sistemi giriş bilgileriniz";
-                string body = "Şifreniz: " + a +
-                    " /               kullanıcı adınız:" + model.OkulNumara;
-                WebMail.Send(model.Email, subject, body, null, null, null, true, null, null, null, null, null, null);
-                ViewBag.Mesaj = "Şifre gönderimi başarılı";
+                
                 IdentityResult result = userManager.Create(user, a);
                 if (result.Succeeded)
                 {
 
                     //kullanıcı oluşunca role atıyoruz!!!
-
+                    string subject = "Staj sistemi giriş bilgileriniz";
+                    string body = "Şifreniz: " + a +
+                        " /               kullanıcı adınız:" + model.OkulNumara;
+                    WebMail.Send(model.Email, subject, body, null, null, null, true, null, null, null, null, null, null);
+                    ViewBag.Mesaj = "Şifre gönderimi başarılı";
                     userManager.AddToRole(user.Id, "ogrenci");
                     return RedirectToAction("Index");
                 }

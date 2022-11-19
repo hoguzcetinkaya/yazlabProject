@@ -27,6 +27,10 @@ namespace YazLab.Controllers
         {
             return View();
         }
+        public ActionResult Bilgilendirme()
+        {
+            return View();
+        }
         public ActionResult OgrenciGiris()
         {
             return View();

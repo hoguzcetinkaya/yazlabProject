@@ -1,0 +1,47 @@
+﻿
+
+@model YazLab.Models.BasvuruModel.Staj
+@{
+    ViewBag.Title = "StajRaporyukleme";
+    Layout = "~/Views/Shared/_Ogrenci.cshtml";
+}
+
+<h2>Staj1</h2>
+
+<div class="content-wrapper">
+    <div class="col-md-9">
+        @if (TempData["basarili"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["basarili"]</p>
+        }
+
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Rapor Yükle</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            @using (Html.BeginForm("RaporYukleme", "Ogrenci", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <input type="radio" name="secim" value="staj1" />Staj1
+                    <input type="radio" name="secim" value="staj2" />Staj2
+                    <input type="radio" name="secim" value="ime" />IME
+                    <br />
+                    <br />
+                    <input class="control-label " type="file" name="OgrenciPdf" value="Rapor yükleme" />
+
+
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Kayıt Ekle</button>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

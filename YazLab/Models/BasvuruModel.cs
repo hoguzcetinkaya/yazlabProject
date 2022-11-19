@@ -15,51 +15,52 @@ namespace YazLab.Models
         {
             [Key]
             public int Id { get; set; }
-
+            [Required]
             [DisplayName("Adınız")]
             public string Ad { get; set; }
-
+            [Required]
             [DisplayName("Soyadınız")]
             public string Soyad { get; set; }
+            [Required]
             [DisplayName("TC Kimlik Numaranız")]
-            public string TC{ get; set; }
-
+            public string TC { get; set; }
+            [Required]
             [DisplayName("Telefon Numaranız")]
             public string TelefonNumarasi { get; set; }
-
+            [Required]
             [DisplayName("Adres")]
             public string Adres { get; set; }
-
+            [Required]
             [DisplayName("Staj Türünüz")]
             public string StajTuru { get; set; }
-
+            [Required]
             [DisplayName("Staj Başlangıç Tarihi")]
-            public DateTime StajBaslangicTarihi{ get; set; }
-
+            public DateTime StajBaslangicTarihi { get; set; }
+            [Required]
             [DisplayName("Staj Bitiş Tarihi")]
             public DateTime StajBitisTarihi { get; set; }
-
+            [Required]
             [DisplayName("Çalışılacak İş Gününüz")]
             public int IsGunu { get; set; }
-
+            [Required]
             [DisplayName("Genel Sağlık Sigortası")]
             public string GenelSaglikSigortasi { get; set; }
-
+            [Required]
             [DisplayName("25 Yaşımı Doldurdum")]
             public string YasDoldurma { get; set; }
-
+            [Required]
             [DisplayName("Firma Adı")]
             public string FirmaAd { get; set; }
-
+            [Required]
             [DisplayName("Firma Faaliyet Alanı")]
             public string FirmaFaaliyetAlani { get; set; }
-
+            [Required]
             [DisplayName("Firma Adresi")]
-            public string FirmaAdres{ get; set; }
-
+            public string FirmaAdres { get; set; }
+            [Required]
             [DisplayName("Firma Telefon Numarası")]
             public string FirmaTelefon { get; set; }
-
+            [Required]
             public bool Staj1Durum { get; set; }
             public bool Staj1OnayDurum { get; set; }
 
@@ -73,6 +74,9 @@ namespace YazLab.Models
             public int Staj2Not { get; set; }
 
             public string User_Id { get; set; }
+
+            public string Staj1RaporPdf { get; set; }
+            public string Staj2RaporPdf { get; set; }
 
         }
 
@@ -141,6 +145,8 @@ namespace YazLab.Models
             public bool ImeRed { get; set; }
 
             public string User_Id { get; set; }
-    }
+            public string RaporPdf { get; set; }
+
+        }
     }
 }

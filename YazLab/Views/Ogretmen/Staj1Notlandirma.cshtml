@@ -45,6 +45,9 @@
                                     @Html.DisplayNameFor(model => model.StajBitisTarihi)
                                 </th>
                                 <th>
+                                    @Html.DisplayNameFor(model => model.Staj1RaporPdf)
+                                </th>
+                                <th>
                                     Staj Başvurusu
                                 </th>
                                 <th colspan="2">Not</th>
@@ -71,6 +74,9 @@
                                         <td>
                                             @item.StajBitisTarihi
                                         </td>
+                                        <th>
+                                            <a type="text" name="not" target="_blank" class="col-md-8" href="@item.Staj1RaporPdf">Raporu İndir</a>
+                                        </th>
                                         <td>
                                             @Html.ActionLink("Staj Başvurusu", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
                                         </td>

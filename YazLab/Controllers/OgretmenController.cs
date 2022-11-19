@@ -46,7 +46,7 @@ namespace YazLab.Controllers
                     {
                         if (ogrStajBilgi.StajTuru == "Staj1")
                         {
-                            if (ogrStajBilgi.Staj2Not == 0 && ogrStajBilgi.Staj1Durum == true && ogrStajBilgi.Staj1OnayDurum == true)
+                            if (ogrStajBilgi.Staj2Not == 0 && ogrStajBilgi.Staj1Durum == true && ogrStajBilgi.Staj1OnayDurum == true && ogrStajBilgi.Staj1RaporPdf != null)
                             {
                                 list.Add(ogrStajBilgi);
 
@@ -63,8 +63,7 @@ namespace YazLab.Controllers
         [HttpPost]
         public ActionResult Staj1Notlandirma(BasvuruModel.Staj model, string not)
         {
-            if (ModelState.IsValid)
-            {
+            
                 DataContext db = new DataContext();
                 
                 if (not!="")
@@ -90,8 +89,7 @@ namespace YazLab.Controllers
                 TempData["hata"] = "Notu boş bırakmayınız";
                 return RedirectToAction("Staj1Notlandirma");
 
-            }
-            return View();
+            
         }
 
         [HttpGet]
@@ -132,8 +130,7 @@ namespace YazLab.Controllers
         [HttpPost]
         public ActionResult Staj2Notlandirma(BasvuruModel.Staj model, string not)
         {
-            if (ModelState.IsValid)
-            {
+            
                 DataContext db = new DataContext();
 
                 if (not != "")
@@ -159,8 +156,7 @@ namespace YazLab.Controllers
                 TempData["hata"] = "Notu boş bırakmayınız";
                 return RedirectToAction("Staj2Notlandirma");
 
-            }
-            return View();
+            
         }
 
 
@@ -185,7 +181,7 @@ namespace YazLab.Controllers
                     foreach (var ogrStajBilgi in ogrenciImeBilgi)
                     {
                         
-                            if ( ogrStajBilgi.ImeDurum == true && ogrStajBilgi.ImeOnayDurum == true)
+                            if ( ogrStajBilgi.ImeDurum == true && ogrStajBilgi.ImeOnayDurum == true && ogrStajBilgi.RaporPdf!=null)
                             {
                                 list.Add(ogrStajBilgi);
 
@@ -242,6 +238,73 @@ namespace YazLab.Controllers
 
             
             return View(userManager.Users.Where(x => x.Sorumlu == ogretmen.Id).ToList());
+        }
+
+
+        [HttpGet]
+        public ActionResult OgrenciStaj1Bilgi(string id)
+        {
+            DataContext db = new DataContext();
+            if(id!=null)
+            {
+                var ogrenci = userManager.FindByName(id);
+                var ogrenciStaj1Bilgi = db.Stajs.Where(x => x.User_Id == ogrenci.Id && x.StajTuru == "Staj1").ToList();
+                if(ogrenciStaj1Bilgi.Count()!=0)
+                {
+                    return View(ogrenciStaj1Bilgi);
+                }
+                else
+                {
+                    TempData["hata"] = "Öğrencinin staj 1 başvurusu bulunmamaktadır";
+                    return RedirectToAction("SorumluOldugumOgrenciler");
+                }
+            }
+            return RedirectToAction("SorumluOldugumOgrenciler");
+
+        }
+
+        [HttpGet]
+        public ActionResult OgrenciStaj2Bilgi(string id)
+        {
+            DataContext db = new DataContext();
+            if (id != null)
+            {
+                var ogrenci = userManager.FindByName(id);
+                var ogrenciStaj2Bilgi = db.Stajs.Where(x => x.User_Id == ogrenci.Id && x.StajTuru == "Staj2").ToList();
+                if (ogrenciStaj2Bilgi.Count() != 0)
+                {
+                    return View(ogrenciStaj2Bilgi);
+                }
+                else
+                {
+                    TempData["hata"] = "Öğrencinin staj 2 başvurusu bulunmamaktadır";
+                    return RedirectToAction("SorumluOldugumOgrenciler");
+                }
+            }
+            return RedirectToAction("SorumluOldugumOgrenciler");
+
+        }
+
+        [HttpGet]
+        public ActionResult OgrenciIMEBilgi(string id)
+        {
+            DataContext db = new DataContext();
+            if (id != null)
+            {
+                var ogrenci = userManager.FindByName(id);
+                var OgrenciIMEBilgi = db.Imes.Where(x => x.User_Id == ogrenci.Id).ToList();
+                if (OgrenciIMEBilgi.Count() != 0)
+                {
+                    return View(OgrenciIMEBilgi);
+                }
+                else
+                {
+                    TempData["hata"] = "Öğrencinin İME başvurusu bulunmamaktadır";
+                    return RedirectToAction("SorumluOldugumOgrenciler");
+                }
+            }
+            return RedirectToAction("SorumluOldugumOgrenciler");
+
         }
     }
 }

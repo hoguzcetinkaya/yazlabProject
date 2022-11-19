@@ -63,7 +63,7 @@
                                         @item.StajBitisTarihi
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" })
+                                        @Html.ActionLink("Staj Başvurum", "StajBasvurumPDF", "Ogrenci", new { id = item.Id }, new { @class = "btn btn-info" ,target="_blank"})
                                     </td>
                                     <td>
                                         @if (item.Staj1Red == true)
@@ -108,8 +108,7 @@
                     </section>
                     <!-- /.Left col -->
                     <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                    <section class="col-lg-5 connectedSortable">
-                    </section>
+                    
                     <!-- right col -->
                 </div>
                 <!-- /.row (main row) -->

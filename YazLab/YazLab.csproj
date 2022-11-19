@@ -4054,6 +4054,12 @@
     <Content Include="Views\Ogrenci\StajNotlarim.cshtml" />
     <Content Include="Views\Ogrenci\ImeNotum.cshtml" />
     <Content Include="Views\Ogretmen\SorumluOldugumOgrenciler.cshtml" />
+    <Content Include="Views\Ogrenci\RaporYukleme.cshtml" />
+    <Content Include="Views\Ogrenci\RaporYuklemeIME.cshtml" />
+    <Content Include="Views\Account\Bilgilendirme.cshtml" />
+    <Content Include="Views\Ogretmen\OgrenciStaj1Bilgi.cshtml" />
+    <Content Include="Views\Ogretmen\OgrenciStaj2Bilgi.cshtml" />
+    <Content Include="Views\Ogretmen\OgrenciIMEBilgi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -4063,6 +4069,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="PdfDepo\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

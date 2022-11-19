@@ -34,7 +34,7 @@ namespace YazLab.Pdf
         //pdf nasıl gözükecek ?
         public byte[] ReportPdf(List<BasvuruModel.Staj> model)
         {
-            iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance("D:\\VisualStudioExamples\\yazilimGelistirmeLab\\images\\kou-logo.jpg");
+            iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance("D:\\YazLabProje6\\images\\kou-logo.jpg");
 
             //Resize image depend upon your need
 
